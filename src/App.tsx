@@ -1,8 +1,7 @@
-import './App.css'
-import Scoresheet from './components/Scoresheet'
+import BridgeGame from './components/BridgeGame/BridgeGame'
 
 function App() {
-  return <Scoresheet />
+  return <BridgeGame />
 }
 
 export default App
