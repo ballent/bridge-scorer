@@ -14,6 +14,14 @@ class RubberTeam {
   getScoreAbove() {
     return this.scoreAbove
   }
+
+  getTotalScore() {
+    const totalScoreAbove = this.scoreAbove.reduce((sum, num) => sum + num, 0)
+    const totalScoreBelow = this.scoreBelow
+      .flat()
+      .reduce((sum, num) => sum + num, 0)
+    return totalScoreAbove + totalScoreBelow
+  }
 }
 
 export default RubberTeam

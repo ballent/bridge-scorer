@@ -22,12 +22,12 @@ const Scoresheet: React.FC<ScoresheetProps> = ({
         <tr className="break"></tr>
         <tr>
           <td>
-            {scoresAbove.teamWe.map((score, i) => {
+            {[...scoresAbove.teamWe].reverse().map((score, i) => {
               return <p key={'we-above-' + i}>{score}</p>
             })}
           </td>
           <td>
-            {scoresAbove.teamThey.map((score, i) => {
+            {[...scoresAbove.teamThey].reverse().map((score, i) => {
               return <p key={'they-above-' + i}>{score}</p>
             })}
           </td>

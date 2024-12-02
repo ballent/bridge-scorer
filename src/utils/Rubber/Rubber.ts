@@ -1,8 +1,12 @@
 import RubberTeam from '../Team'
 import {
   DOUBLED_BASE_VALUE,
+  FAST_RUBBER_BONUS,
+  GS_BONUS_BASE_VALUE,
   POINTS_MAJOR,
   POINTS_MINOR,
+  SLOW_RUBBER_BONUS,
+  SS_BONUS_BASE_VALUE,
   UNDERTRICK_BASE_VALUE,
   UNDERTRICK_DOUBLED_LOOKUP,
   UNDERTRICK_DOUBLED_VULNERABLE_LOOKUP
@@ -71,6 +75,8 @@ class Rubber {
       isBidDoubledOrRedoubled,
       vulnerableMultiplier,
       pointsPerTrick,
+      isSmallSlamBid: bid.contractTricks === 6,
+      isGrandSlamBid: bid.contractTricks === 7,
       biddingTeam: bid.team === TEAM.WE ? this.teamWe : this.teamThey,
       dummyTeam: bid.team === TEAM.WE ? this.teamThey : this.teamWe,
       pointsPerOverTrick: isBidDoubledOrRedoubled
@@ -102,8 +108,8 @@ class Rubber {
       : UNDERTRICK_DOUBLED_LOOKUP
 
     for (let i = 0; i < underTricks; i++) {
-      const lookupIndex = i > lookupList.length ? lookupList.length - 1 : i
-      penaltyPoints += UNDERTRICK_DOUBLED_VULNERABLE_LOOKUP[lookupIndex]
+      const lookupIndex = i > lookupList.length - 1 ? lookupList.length - 1 : i
+      penaltyPoints += lookupList[lookupIndex]
     }
     bidContext.dummyTeam.scoreAbove.push(penaltyPoints)
 
@@ -112,10 +118,27 @@ class Rubber {
 
   calculateSuccessfulBidPoints(bidContext: IBidContext) {
     const noTrumpBonus = bidContext.bid.suit === SUIT.NO_TRUMP ? 10 : 0
-
     if (bidContext.bid.tricksMade > 0) {
       bidContext.biddingTeam.scoreAbove.push(
         bidContext.pointsPerOverTrick * bidContext.bid.tricksMade
+      )
+    }
+    if (bidContext.isSmallSlamBid || bidContext.isGrandSlamBid) {
+      const slamVulnerableMultiplier = this.vulnerableTeams.includes(
+        bidContext.bid.team
+      )
+        ? 1.5
+        : 1
+      const slamBonus = bidContext.isSmallSlamBid
+        ? SS_BONUS_BASE_VALUE
+        : GS_BONUS_BASE_VALUE
+      bidContext.biddingTeam.scoreAbove.push(
+        slamBonus * slamVulnerableMultiplier
+      )
+    }
+    if (bidContext.isBidDoubledOrRedoubled) {
+      bidContext.biddingTeam.scoreAbove.push(
+        DOUBLED_BASE_VALUE * (bidContext.bidMultiplier / 2)
       )
     }
     bidContext.biddingTeam.scoreBelow[this.gameIndex].push(
@@ -125,11 +148,23 @@ class Rubber {
     if (this.isGameWin(bidContext.biddingTeam.scoreBelow[this.gameIndex])) {
       this.teamWe.scoreBelow.push([])
       this.teamThey.scoreBelow.push([])
-      this.isGameOver = this.vulnerableTeams.includes(bidContext.bid.team)
-      this.vulnerableTeams.push(bidContext.bid.team)
       this.gameIndex++
+      this.isGameOver = this.vulnerableTeams.includes(bidContext.bid.team)
+      this.isGameOver && this.finalizeGame(bidContext.biddingTeam)
+      this.vulnerableTeams.push(bidContext.bid.team)
     }
     return this
+  }
+
+  finalizeGame(biddingTeam: RubberTeam) {
+    const slowRubber =
+      this.vulnerableTeams.includes(TEAM.WE) &&
+      this.vulnerableTeams.includes(TEAM.THEY)
+    biddingTeam.scoreAbove.push(
+      slowRubber ? SLOW_RUBBER_BONUS : FAST_RUBBER_BONUS
+    )
+    this.teamWe.scoreBelow[this.gameIndex].push(this.teamWe.getTotalScore())
+    this.teamThey.scoreBelow[this.gameIndex].push(this.teamThey.getTotalScore())
   }
 
   isGameWin(scores: number[]) {

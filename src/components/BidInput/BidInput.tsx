@@ -7,7 +7,8 @@ const defaultBid: IBid = {
   tricksMade: 0,
   suit: SUIT.CLUBS,
   isDoubled: false,
-  isRedoubled: false
+  isRedoubled: false,
+  honors: 0
 }
 
 const contractTrickOptions = [
@@ -50,13 +51,13 @@ const BidInput: React.FC<BidInputProps> = ({ onSubmit }) => {
   ) => {
     const { name, value, type } = e.target
     const checked = type === 'checkbox' ? e.target.checked : undefined
+    const val = Number(value) ? Number(value) : value
 
     setBidData((prevData) => ({
       ...prevData,
-      [name]: checked !== undefined ? checked : value
+      [name]: checked !== undefined ? checked : val
     }))
   }
-  console.log(bidData)
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -166,6 +167,19 @@ const BidInput: React.FC<BidInputProps> = ({ onSubmit }) => {
         />
       </div>
 
+      <div>
+        <label htmlFor="honors">Honors?</label>
+        <select
+          id="honors"
+          name="honors"
+          value={bidData?.honors}
+          onChange={handleChange}
+        >
+          <option value={0}>No honors</option>
+          <option value={100}>100</option>
+          <option value={150}>150</option>
+        </select>
+      </div>
       <button type="submit">Submit</button>
     </form>
   )

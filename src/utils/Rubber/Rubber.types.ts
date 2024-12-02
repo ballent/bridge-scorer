@@ -14,6 +14,8 @@ export interface IBidContext {
   isBidDoubledOrRedoubled: boolean
   vulnerableMultiplier: number
   pointsPerTrick: number
+  isSmallSlamBid: boolean
+  isGrandSlamBid: boolean
   biddingTeam: RubberTeam
   dummyTeam: RubberTeam
   pointsPerOverTrick: number
@@ -39,4 +41,5 @@ export interface IBid {
   suit: SUIT
   isDoubled: boolean
   isRedoubled: boolean
+  honors: number
 }
