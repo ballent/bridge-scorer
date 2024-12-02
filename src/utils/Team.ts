@@ -10,6 +10,10 @@ class RubberTeam {
   getScoreBelow() {
     return this.scoreBelow
   }
+
+  getScoreAbove() {
+    return this.scoreAbove
+  }
 }
 
 export default RubberTeam

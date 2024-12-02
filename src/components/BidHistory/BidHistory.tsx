@@ -1,5 +1,5 @@
 import { Fragment } from 'react/jsx-runtime'
-import { IBid } from '../../utils/Bid'
+import { IBid } from '../../utils/Rubber/Rubber.types'
 
 interface BidHistoryProps {
   bids: IBid[]

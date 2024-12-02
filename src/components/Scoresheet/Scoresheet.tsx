@@ -28,7 +28,7 @@ const Scoresheet: React.FC<ScoresheetProps> = ({
           </td>
           <td>
             {scoresAbove.teamThey.map((score, i) => {
-              return <p key={'we-below-'+i}>{score}</p>
+              return <p key={'they-above-'+i}>{score}</p>
             })}
           </td>
         </tr>

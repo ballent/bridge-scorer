@@ -1,5 +1,5 @@
 import { useState, ChangeEvent, FormEvent } from 'react'
-import { IBid, SUIT, TEAM } from '../../utils/Bid'
+import { IBid, SUIT, TEAM } from '../../utils/Rubber/Rubber.types';
 
 const defaultBid: IBid = {
   team: TEAM.WE,
@@ -39,7 +39,7 @@ const tricksMadeOptions = [
 ]
 
 interface BidInputProps {
-  onSubmit: (bid: IBid) => void;
+  onSubmit: (bid: IBid) => void
 }
 
 const BidInput: React.FC<BidInputProps> = ({onSubmit}) => {
