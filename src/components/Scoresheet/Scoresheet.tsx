@@ -1,4 +1,4 @@
-import { Fragment } from 'react/jsx-runtime';
+import { Fragment } from 'react/jsx-runtime'
 import './Scoresheet.css'
 
 interface ScoresheetProps {
@@ -8,7 +8,7 @@ interface ScoresheetProps {
 
 const Scoresheet: React.FC<ScoresheetProps> = ({
   scoresAbove,
-  scoresBelow,
+  scoresBelow
 }) => {
   return (
     <table>
@@ -23,12 +23,12 @@ const Scoresheet: React.FC<ScoresheetProps> = ({
         <tr>
           <td>
             {scoresAbove.teamWe.map((score, i) => {
-              return <p key={'we-above-'+i}>{score}</p>
+              return <p key={'we-above-' + i}>{score}</p>
             })}
           </td>
           <td>
             {scoresAbove.teamThey.map((score, i) => {
-              return <p key={'they-above-'+i}>{score}</p>
+              return <p key={'they-above-' + i}>{score}</p>
             })}
           </td>
         </tr>
@@ -40,12 +40,12 @@ const Scoresheet: React.FC<ScoresheetProps> = ({
               <tr>
                 <td>
                   {scoresBelow.teamWe[i].map((score, j) => {
-                    return <p key={'we-'+i+j}>{score}</p>
+                    return <p key={'we-' + i + j}>{score}</p>
                   })}
                 </td>
                 <td>
                   {scoresBelow.teamThey[i].map((score, j) => {
-                    return <p key={'they-'+i+j}>{score}</p>
+                    return <p key={'they-' + i + j}>{score}</p>
                   })}
                 </td>
               </tr>

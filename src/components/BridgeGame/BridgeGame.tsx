@@ -8,7 +8,9 @@ import BidHistory from '../BidHistory/BidHistory'
 const rubber = new Rubber()
 
 const BridgeGame = () => {
-  const [rubberGameState, setRubberGameState] = useState<IRubberGameState>(rubber.getState())
+  const [rubberGameState, setRubberGameState] = useState<IRubberGameState>(
+    rubber.getState()
+  )
 
   const handleSubmitBid = (bid: IBid) => {
     setRubberGameState(rubber.sumbitBid(bid).getState())
@@ -17,9 +19,12 @@ const BridgeGame = () => {
   return (
     <>
       <BidInput onSubmit={handleSubmitBid} />
-      <Scoresheet scoresBelow={rubberGameState.scoresBelow} scoresAbove={rubberGameState.scoresAbove} />
+      <Scoresheet
+        scoresBelow={rubberGameState.scoresBelow}
+        scoresAbove={rubberGameState.scoresAbove}
+      />
       <BidHistory bids={rubberGameState.bidHistory} />
-      <div>{rubberGameState.isGameOver && "Game over"}</div>
+      <div>{rubberGameState.isGameOver && 'Game over'}</div>
     </>
   )
 }

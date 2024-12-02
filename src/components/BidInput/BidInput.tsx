@@ -1,5 +1,5 @@
 import { useState, ChangeEvent, FormEvent } from 'react'
-import { IBid, SUIT, TEAM } from '../../utils/Rubber/Rubber.types';
+import { IBid, SUIT, TEAM } from '../../utils/Rubber/Rubber.types'
 
 const defaultBid: IBid = {
   team: TEAM.WE,
@@ -17,7 +17,7 @@ const contractTrickOptions = [
   { value: 4, label: '4' },
   { value: 5, label: '5' },
   { value: 6, label: '6' },
-  { value: 7, label: '7' },
+  { value: 7, label: '7' }
 ]
 
 const tricksMadeOptions = [
@@ -35,14 +35,14 @@ const tricksMadeOptions = [
   { value: 3, label: '+3' },
   { value: 4, label: '+4' },
   { value: 5, label: '+5' },
-  { value: 6, label: '+6' },
+  { value: 6, label: '+6' }
 ]
 
 interface BidInputProps {
   onSubmit: (bid: IBid) => void
 }
 
-const BidInput: React.FC<BidInputProps> = ({onSubmit}) => {
+const BidInput: React.FC<BidInputProps> = ({ onSubmit }) => {
   const [bidData, setBidData] = useState<IBid>(defaultBid)
 
   const handleChange = (
@@ -53,7 +53,7 @@ const BidInput: React.FC<BidInputProps> = ({onSubmit}) => {
 
     setBidData((prevData) => ({
       ...prevData,
-      [name]: checked !== undefined ? checked : value,
+      [name]: checked !== undefined ? checked : value
     }))
   }
   console.log(bidData)

@@ -5,7 +5,7 @@ import {
   POINTS_MINOR,
   UNDERTRICK_BASE_VALUE,
   UNDERTRICK_DOUBLED_LOOKUP,
-  UNDERTRICK_DOUBLED_VULNERABLE_LOOKUP,
+  UNDERTRICK_DOUBLED_VULNERABLE_LOOKUP
 } from './constants'
 import { IBid, IBidContext, SUIT, TEAM } from './Rubber.types'
 
@@ -30,14 +30,14 @@ class Rubber {
     return {
       scoresAbove: {
         teamWe: this.teamWe.getScoreAbove(),
-        teamThey: this.teamThey.getScoreAbove(),
+        teamThey: this.teamThey.getScoreAbove()
       },
       scoresBelow: {
         teamWe: this.teamWe.getScoreBelow(),
-        teamThey: this.teamThey.getScoreBelow(),
+        teamThey: this.teamThey.getScoreBelow()
       },
       bidHistory: this.bidHistory,
-      isGameOver: this.isGameOver,
+      isGameOver: this.isGameOver
     }
   }
 
@@ -75,7 +75,7 @@ class Rubber {
       dummyTeam: bid.team === TEAM.WE ? this.teamThey : this.teamWe,
       pointsPerOverTrick: isBidDoubledOrRedoubled
         ? DOUBLED_BASE_VALUE * bidMultiplier * vulnerableMultiplier
-        : pointsPerTrick,
+        : pointsPerTrick
     }
   }
 

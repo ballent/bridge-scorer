@@ -10,8 +10,11 @@ const BidHistory: React.FC<BidHistoryProps> = ({ bids }) => {
     <div>
       {bids.map((bid, i) => {
         return (
-          <Fragment key={"bid-"+i}>
-            <div>{bid.suit} {bid.contractTricks} {bid.tricksMade ? bid.tricksMade : ''}</div>
+          <Fragment key={'bid-' + i}>
+            <div>
+              {bid.suit} {bid.contractTricks}{' '}
+              {bid.tricksMade ? bid.tricksMade : ''}
+            </div>
           </Fragment>
         )
       })}
