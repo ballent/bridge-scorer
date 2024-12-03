@@ -118,6 +118,10 @@ class Rubber {
 
   calculateSuccessfulBidPoints(bidContext: IBidContext) {
     const noTrumpBonus = bidContext.bid.suit === SUIT.NO_TRUMP ? 10 : 0
+    bidContext.biddingTeam.scoreBelow[this.gameIndex].push(
+      bidContext.pointsPerTrick * bidContext.bid.contractTricks + noTrumpBonus
+    )
+
     if (bidContext.bid.tricksMade > 0) {
       bidContext.biddingTeam.scoreAbove.push(
         bidContext.pointsPerOverTrick * bidContext.bid.tricksMade
@@ -136,14 +140,14 @@ class Rubber {
         slamBonus * slamVulnerableMultiplier
       )
     }
+
+    bidContext.bid.honorsWe && this.teamWe.scoreAbove.push(bidContext.bid.honorsWe)
+    bidContext.bid.honorsThey && this.teamThey.scoreAbove.push(bidContext.bid.honorsThey)
     if (bidContext.isBidDoubledOrRedoubled) {
       bidContext.biddingTeam.scoreAbove.push(
         DOUBLED_BASE_VALUE * (bidContext.bidMultiplier / 2)
       )
     }
-    bidContext.biddingTeam.scoreBelow[this.gameIndex].push(
-      bidContext.pointsPerTrick * bidContext.bid.contractTricks + noTrumpBonus
-    )
 
     if (this.isGameWin(bidContext.biddingTeam.scoreBelow[this.gameIndex])) {
       this.teamWe.scoreBelow.push([])
@@ -151,7 +155,7 @@ class Rubber {
       this.gameIndex++
       this.isGameOver = this.vulnerableTeams.includes(bidContext.bid.team)
       this.isGameOver && this.finalizeGame(bidContext.biddingTeam)
-      this.vulnerableTeams.push(bidContext.bid.team)
+      !this.isGameOver && this.vulnerableTeams.push(bidContext.bid.team)
     }
     return this
   }

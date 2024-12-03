@@ -41,5 +41,6 @@ export interface IBid {
   suit: SUIT
   isDoubled: boolean
   isRedoubled: boolean
-  honors: number
+  honorsWe: number
+  honorsThey: number
 }

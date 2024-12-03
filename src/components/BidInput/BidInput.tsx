@@ -8,7 +8,8 @@ const defaultBid: IBid = {
   suit: SUIT.CLUBS,
   isDoubled: false,
   isRedoubled: false,
-  honors: 0
+  honorsWe: 0,
+  honorsThey: 0
 }
 
 const contractTrickOptions = [
@@ -51,7 +52,7 @@ const BidInput: React.FC<BidInputProps> = ({ onSubmit }) => {
   ) => {
     const { name, value, type } = e.target
     const checked = type === 'checkbox' ? e.target.checked : undefined
-    const val = Number(value) ? Number(value) : value
+    const val = !isNaN(Number(value)) ? Number(value) : value
 
     setBidData((prevData) => ({
       ...prevData,
@@ -168,11 +169,25 @@ const BidInput: React.FC<BidInputProps> = ({ onSubmit }) => {
       </div>
 
       <div>
-        <label htmlFor="honors">Honors?</label>
+        <label htmlFor="honorsWe">Honors we?</label>
         <select
-          id="honors"
-          name="honors"
-          value={bidData?.honors}
+          id="honorsWe"
+          name="honorsWe"
+          value={bidData?.honorsWe}
+          onChange={handleChange}
+        >
+          <option value={0}>No honors</option>
+          <option value={100}>100</option>
+          <option value={150}>150</option>
+        </select>
+      </div>
+
+      <div>
+        <label htmlFor="honorsThey">Honors they?</label>
+        <select
+          id="honorsThey"
+          name="honorsThey"
+          value={bidData?.honorsThey}
           onChange={handleChange}
         >
           <option value={0}>No honors</option>
