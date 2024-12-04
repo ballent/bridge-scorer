@@ -1,10 +1,16 @@
+
+interface IRubberTeamOptions {
+  scoreAbove: number[]
+  scoreBelow: number[][]
+}
+
 class RubberTeam {
   scoreAbove: number[]
   scoreBelow: number[][]
 
-  constructor() {
-    this.scoreAbove = []
-    this.scoreBelow = [[]]
+  constructor(teamOptions?: IRubberTeamOptions) {
+    this.scoreAbove = teamOptions ? teamOptions.scoreAbove : []
+    this.scoreBelow = teamOptions ? teamOptions.scoreBelow : [[]]
   }
 
   getScoreBelow() {

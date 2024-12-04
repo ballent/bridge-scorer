@@ -1,5 +1,14 @@
 import RubberTeam from '../Team'
 
+export interface IRubber {
+  vulnerableTeams: TEAM[]
+  teamWe: RubberTeam
+  teamThey: RubberTeam
+  bidHistory: IBid[]
+  gameIndex: number
+  isGameOver: boolean
+}
+
 export interface IRubberGameState {
   scoresAbove: { teamWe: number[]; teamThey: number[] }
   scoresBelow: { teamWe: number[][]; teamThey: number[][] }

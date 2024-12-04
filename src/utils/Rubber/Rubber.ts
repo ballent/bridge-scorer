@@ -11,7 +11,7 @@ import {
   UNDERTRICK_DOUBLED_LOOKUP,
   UNDERTRICK_DOUBLED_VULNERABLE_LOOKUP
 } from './constants'
-import { IBid, IBidContext, SUIT, TEAM } from './Rubber.types'
+import { IBid, IBidContext, IRubber, SUIT, TEAM } from './Rubber.types'
 
 class Rubber {
   vulnerableTeams: TEAM[]
@@ -21,13 +21,13 @@ class Rubber {
   gameIndex: number
   isGameOver: boolean
 
-  constructor() {
-    this.teamWe = new RubberTeam()
-    this.teamThey = new RubberTeam()
-    this.vulnerableTeams = []
-    this.bidHistory = []
-    this.gameIndex = 0
-    this.isGameOver = false
+  constructor(rubber?: IRubber) {
+    this.teamWe = rubber ? new RubberTeam(rubber.teamWe) : new RubberTeam()
+    this.teamThey = rubber ? new RubberTeam(rubber.teamThey) : new RubberTeam()
+    this.vulnerableTeams = rubber ? rubber.vulnerableTeams : []
+    this.bidHistory = rubber ? rubber.bidHistory : []
+    this.gameIndex = rubber ? rubber.gameIndex : 0
+    this.isGameOver = rubber ? rubber.isGameOver : false
   }
 
   getState() {
@@ -173,6 +173,15 @@ class Rubber {
 
   isGameWin(scores: number[]) {
     return scores.reduce((sum, num) => sum + num, 0) >= 100
+  }
+
+  resetRubber() {
+    this.teamWe = new RubberTeam()
+    this.teamThey = new RubberTeam()
+    this.vulnerableTeams = []
+    this.bidHistory = []
+    this.gameIndex = 0
+    this.isGameOver = false
   }
 }
 
