@@ -4,30 +4,16 @@ export interface IRubber {
   vulnerableTeams: TEAM[]
   teamWe: RubberTeam
   teamThey: RubberTeam
-  bidHistory: IBid[]
+  bidHistory: IContractBid[]
   gameIndex: number
   isGameOver: boolean
 }
 
 export interface IRubberGameState {
-  scoresAbove: { teamWe: number[]; teamThey: number[] }
-  scoresBelow: { teamWe: number[][]; teamThey: number[][] }
-  bidHistory: IBid[]
+  scoresAbove: { teamWe: IBidScore[]; teamThey: IBidScore[] }
+  scoresBelow: { teamWe: IBidScore[][]; teamThey: IBidScore[][] }
+  bidHistory: IContractBid[]
   isGameOver: boolean
-}
-
-export interface IBidContext {
-  bid: IBid
-  bidMultiplier: number
-  biddingTeamVulnerable: boolean
-  isBidDoubledOrRedoubled: boolean
-  vulnerableMultiplier: number
-  pointsPerTrick: number
-  isSmallSlamBid: boolean
-  isGrandSlamBid: boolean
-  biddingTeam: RubberTeam
-  dummyTeam: RubberTeam
-  pointsPerOverTrick: number
 }
 
 export enum TEAM {
@@ -43,7 +29,7 @@ export enum SUIT {
   NO_TRUMP = 'N'
 }
 
-export interface IBid {
+export interface IContractBid {
   team: TEAM
   contractTricks: number
   tricksMade: number
@@ -52,4 +38,10 @@ export interface IBid {
   isRedoubled: boolean
   honorsWe: number
   honorsThey: number
+}
+
+export interface IBidScore {
+  id: number
+  score: number
+  scoreDescription: string
 }

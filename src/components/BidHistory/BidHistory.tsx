@@ -1,20 +1,21 @@
 import { Fragment } from 'react/jsx-runtime'
-import { IBid } from '../../utils/Rubber/Rubber.types'
+import { IContractBid } from '../../utils/Rubber/Rubber.types'
 
 interface BidHistoryProps {
-  bids: IBid[]
+  bids: IContractBid[]
+  jumpTo: (bids: IContractBid[]) => void
 }
 
-const BidHistory: React.FC<BidHistoryProps> = ({ bids }) => {
+const BidHistory: React.FC<BidHistoryProps> = ({ bids, jumpTo }) => {
   return (
     <div>
       {bids.map((bid, i) => {
         return (
           <Fragment key={'bid-' + i}>
-            <div>
+            <button onClick={() => jumpTo(bids.slice(0, i + 1))}>
               {bid.suit} {bid.contractTricks}{' '}
               {bid.tricksMade ? bid.tricksMade : ''}
-            </div>
+            </button>
           </Fragment>
         )
       })}

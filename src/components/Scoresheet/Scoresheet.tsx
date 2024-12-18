@@ -1,9 +1,17 @@
 import { Fragment } from 'react/jsx-runtime'
 import './Scoresheet.css'
+import { IBidScore } from '../../utils/Rubber/Rubber.types'
 
 interface ScoresheetProps {
-  scoresAbove: { teamWe: number[]; teamThey: number[] }
-  scoresBelow: { teamWe: number[][]; teamThey: number[][] }
+  scoresAbove: { teamWe: IBidScore[]; teamThey: IBidScore[] }
+  scoresBelow: { teamWe: IBidScore[][]; teamThey: IBidScore[][] }
+}
+
+const ScoreInfo = ({ bid }: { bid: IBidScore }) => {
+  const handlePress = () => {
+    console.log(bid.scoreDescription)
+  }
+  return <button onClick={handlePress}>{bid.score}</button>
 }
 
 const Scoresheet: React.FC<ScoresheetProps> = ({
@@ -22,13 +30,13 @@ const Scoresheet: React.FC<ScoresheetProps> = ({
         <tr className="break"></tr>
         <tr>
           <td>
-            {[...scoresAbove.teamWe].reverse().map((score, i) => {
-              return <p key={'we-above-' + i}>{score}</p>
+            {[...scoresAbove.teamWe].reverse().map((bid, i) => {
+              return <ScoreInfo key={'we-above-' + i} bid={bid} />
             })}
           </td>
           <td>
-            {[...scoresAbove.teamThey].reverse().map((score, i) => {
-              return <p key={'they-above-' + i}>{score}</p>
+            {[...scoresAbove.teamThey].reverse().map((bid, i) => {
+              return <ScoreInfo key={'they-above-' + i} bid={bid} />
             })}
           </td>
         </tr>
@@ -39,13 +47,13 @@ const Scoresheet: React.FC<ScoresheetProps> = ({
               <tr className="break"></tr>
               <tr>
                 <td>
-                  {scoresBelow.teamWe[i].map((score, j) => {
-                    return <p key={'we-' + i + j}>{score}</p>
+                  {scoresBelow.teamWe[i].map((bid, j) => {
+                    return <ScoreInfo key={'we-' + i + j} bid={bid} />
                   })}
                 </td>
                 <td>
-                  {scoresBelow.teamThey[i].map((score, j) => {
-                    return <p key={'they-' + i + j}>{score}</p>
+                  {scoresBelow.teamThey[i].map((bid, j) => {
+                    return <ScoreInfo key={'they-' + i + j} bid={bid} />
                   })}
                 </td>
               </tr>

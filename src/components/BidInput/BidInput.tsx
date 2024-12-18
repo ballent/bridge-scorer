@@ -1,7 +1,7 @@
 import { useState, ChangeEvent, FormEvent } from 'react'
-import { IBid, SUIT, TEAM } from '../../utils/Rubber/Rubber.types'
+import { IContractBid, SUIT, TEAM } from '../../utils/Rubber/Rubber.types'
 
-const defaultBid: IBid = {
+const defaultBid: IContractBid = {
   team: TEAM.WE,
   contractTricks: 1,
   tricksMade: 0,
@@ -41,11 +41,11 @@ const tricksMadeOptions = [
 ]
 
 interface BidInputProps {
-  onSubmit: (bid: IBid) => void
+  onSubmit: (bid: IContractBid) => void
 }
 
 const BidInput: React.FC<BidInputProps> = ({ onSubmit }) => {
-  const [bidData, setBidData] = useState<IBid>(defaultBid)
+  const [bidData, setBidData] = useState<IContractBid>(defaultBid)
 
   const handleChange = (
     e: ChangeEvent<HTMLInputElement | HTMLSelectElement>
