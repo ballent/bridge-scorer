@@ -1,10 +1,11 @@
+import Bid from '../Bid'
 import RubberTeam from '../Team'
 
 export interface IRubber {
   vulnerableTeams: TEAM[]
   teamWe: RubberTeam
   teamThey: RubberTeam
-  bidHistory: IContractBid[]
+  bidHistory: Bid[]
   gameIndex: number
   isGameOver: boolean
 }
@@ -12,7 +13,7 @@ export interface IRubber {
 export interface IRubberGameState {
   scoresAbove: { teamWe: IBidScore[]; teamThey: IBidScore[] }
   scoresBelow: { teamWe: IBidScore[][]; teamThey: IBidScore[][] }
-  bidHistory: IContractBid[]
+  contractBidHistory: IContractBid[]
   isGameOver: boolean
 }
 

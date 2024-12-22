@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { createContext, useState } from 'react'
 import BidInput from '../BidInput/BidInput'
 import Scoresheet from '../Scoresheet/Scoresheet'
 import Rubber from '../../utils/Rubber/Rubber'
@@ -9,6 +9,7 @@ import {
 } from '../../utils/Rubber/Rubber.types'
 import BidHistory from '../BidHistory/BidHistory'
 
+
 const activeRubber: IRubber = JSON.parse(
   localStorage.getItem('activeRubber') || '{}'
 )
@@ -16,18 +17,31 @@ const rubber = Object.keys(activeRubber).length
   ? new Rubber(activeRubber)
   : new Rubber()
 
+export const RubberContext = createContext<Rubber>(rubber)
+
 const BridgeGame = () => {
   const [rubberGameState, setRubberGameState] = useState<IRubberGameState>(
     rubber.getState()
   )
   const [rubberHistory, setRubberHistory] = useState<IContractBid[]>(
-    rubberGameState.bidHistory
+    rubberGameState.contractBidHistory
   )
 
   const handleSubmitBid = (bid: IContractBid) => {
-    setRubberGameState(rubber.sumbitBid(bid).getState())
-    setRubberHistory(rubberGameState.bidHistory)
+    const newGameState = rubber.sumbitBid(bid).getState()
+    setRubberGameState(newGameState)
+    setRubberHistory(newGameState.contractBidHistory)
     localStorage.setItem('activeRubber', JSON.stringify(rubber))
+  }
+
+  const handleDeleteBid = (bidId: number) => {
+    setRubberGameState(rubber.deleteBid(bidId).getState())
+  }
+
+  const handleEditBid = (bidId: number, bid: IContractBid) => {
+    const newGameState = rubber.editBid(bidId, bid).getState()
+    setRubberGameState(newGameState)
+    setRubberHistory(newGameState.contractBidHistory)
   }
 
   const resetRubber = () => {
@@ -35,7 +49,7 @@ const BridgeGame = () => {
     localStorage.removeItem('activeRubber')
     const newGameState = rubber.getState()
     setRubberGameState(newGameState)
-    setRubberHistory(newGameState.bidHistory)
+    setRubberHistory(newGameState.contractBidHistory)
   }
 
   const jumpToBid = (bids: IContractBid[]) => {
@@ -43,16 +57,18 @@ const BridgeGame = () => {
   }
 
   return (
-    <>
+    <RubberContext.Provider value={rubber}>
       <BidInput onSubmit={handleSubmitBid} />
       <Scoresheet
         scoresBelow={rubberGameState.scoresBelow}
         scoresAbove={rubberGameState.scoresAbove}
+        onDeleteBid={handleDeleteBid}
+        onEditBid={handleEditBid}
       />
       <BidHistory bids={rubberHistory} jumpTo={jumpToBid} />
       <button onClick={() => resetRubber()}>Reset game</button>
       <div>{rubberGameState.isGameOver && 'Game over'}</div>
-    </>
+    </RubberContext.Provider>
   )
 }
 

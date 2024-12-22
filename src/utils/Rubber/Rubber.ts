@@ -22,7 +22,7 @@ class Rubber {
   vulnerableTeams: TEAM[]
   teamWe: RubberTeam
   teamThey: RubberTeam
-  bidHistory: IContractBid[]
+  bidHistory: Bid[]
   gameIndex: number
   isGameOver: boolean
   bidId: number
@@ -47,7 +47,7 @@ class Rubber {
         teamWe: this.teamWe.getScoreBelow(),
         teamThey: this.teamThey.getScoreBelow()
       },
-      bidHistory: this.bidHistory,
+      contractBidHistory: this.getContractBidHistory(),
       isGameOver: this.isGameOver
     }
   }
@@ -56,7 +56,6 @@ class Rubber {
     if (this.isGameOver) {
       return this
     }
-    this.bidHistory.push(bid)
 
     const bidContext = this.createBidContext(bid)
 
@@ -79,6 +78,7 @@ class Rubber {
       dummyTeam
     )
 
+    this.bidHistory.push(bidContext)
     return bidContext
   }
 
@@ -246,6 +246,25 @@ class Rubber {
       this.sumbitBid(bid)
     }
     return this
+  }
+
+  getContractBidHistory() {
+    return this.bidHistory.map(bid => bid.contractBid)
+  }
+
+  deleteBid(bidId: number) {
+    const newContractBidHistory = this.bidHistory.filter(bid => bid.id !== bidId).map(bid => bid.contractBid)
+    return this.jumpToGameState(newContractBidHistory)
+  }
+
+  getContractBidById(bidId: number) {
+    return this.getContractBidHistory()[bidId]
+  }
+
+  editBid(bidId: number, bid: IContractBid) {
+    const contractBids = this.getContractBidHistory()
+    contractBids[bidId] = bid
+    return this.jumpToGameState(contractBids)
   }
 
   resetRubber() {
