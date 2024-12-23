@@ -9,7 +9,6 @@ import {
 } from '../../utils/Rubber/Rubber.types'
 import BidHistory from '../BidHistory/BidHistory'
 
-
 const activeRubber: IRubber = JSON.parse(
   localStorage.getItem('activeRubber') || '{}'
 )
@@ -26,6 +25,7 @@ const BridgeGame = () => {
   const [rubberHistory, setRubberHistory] = useState<IContractBid[]>(
     rubberGameState.contractBidHistory
   )
+  const [scoreIdHovering, setScoreIdHovering] = useState<null | number>(null)
 
   const handleSubmitBid = (bid: IContractBid) => {
     const newGameState = rubber.sumbitBid(bid).getState()
@@ -62,10 +62,12 @@ const BridgeGame = () => {
       <Scoresheet
         scoresBelow={rubberGameState.scoresBelow}
         scoresAbove={rubberGameState.scoresAbove}
+        scoreIdHovering={scoreIdHovering}
+        setScoreIdHovering={setScoreIdHovering}
         onDeleteBid={handleDeleteBid}
         onEditBid={handleEditBid}
       />
-      <BidHistory bids={rubberHistory} jumpTo={jumpToBid} />
+      <BidHistory bids={rubberHistory} scoreIdHovering={scoreIdHovering} jumpTo={jumpToBid} />
       <button onClick={() => resetRubber()}>Reset game</button>
       <div>{rubberGameState.isGameOver && 'Game over'}</div>
     </RubberContext.Provider>

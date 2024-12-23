@@ -1,0 +1,11 @@
+.score-menu {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  z-index: 1;
+  background-color: grey;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 100%;
+  width: 100px;
+}

@@ -1,0 +1,29 @@
+
+.score-container {
+  padding: .5rem;
+  display: flex;
+  justify-content: center;
+  position: relative;
+}
+
+.score {
+  cursor: default;
+  flex-grow: 1;
+}
+
+.score-ellipse {
+  background: none;
+  color: rgba(0, 0, 0, 0.5);
+  border: none;
+  padding: 0;
+  font: inherit;
+  font-size: .75rem;
+  cursor: pointer;
+  outline: inherit;
+  position: absolute;
+  right: 0;
+}
+
+.bold {
+  font-weight: 700;
+}
