@@ -1,6 +1,6 @@
-import { DOUBLED_BASE_VALUE, POINTS_MAJOR, POINTS_MINOR } from "./Rubber/constants";
-import { IContractBid, SUIT } from "./Rubber/Rubber.types";
-import RubberTeam from "./Team";
+import { DOUBLED_BASE_VALUE, POINTS_MAJOR, POINTS_MINOR } from './Rubber/constants'
+import { IContractBid, SUIT } from './Rubber/Rubber.types'
+import RubberTeam from './Team'
 
 class Bid {
   id: number
@@ -16,8 +16,13 @@ class Bid {
   biddingTeam: RubberTeam
   dummyTeam: RubberTeam
 
-
-  constructor(id: number, contractBid: IContractBid, isBiddingTeamVulnerable: boolean, biddingTeam: RubberTeam, dummyTeam: RubberTeam) {
+  constructor(
+    id: number,
+    contractBid: IContractBid,
+    isBiddingTeamVulnerable: boolean,
+    biddingTeam: RubberTeam,
+    dummyTeam: RubberTeam
+  ) {
     const bidMultiplier = contractBid.isRedoubled ? 4 : contractBid.isDoubled ? 2 : 1
     const isBidDoubledOrRedoubled = contractBid.isDoubled || contractBid.isRedoubled
     const vulnerableMultiplier = isBiddingTeamVulnerable ? 2 : 1
@@ -31,14 +36,13 @@ class Bid {
     this.vulnerableMultiplier = vulnerableMultiplier
     this.pointsPerTrick = pointsPerTrick
     this.pointsPerOverTrick = isBidDoubledOrRedoubled
-        ? DOUBLED_BASE_VALUE * bidMultiplier * vulnerableMultiplier
-        : pointsPerTrick
-    this.isSmallSlamBid = contractBid.contractTricks === 6,
-    this.isGrandSlamBid = contractBid.contractTricks === 7,
-    this.biddingTeam = biddingTeam,
+      ? DOUBLED_BASE_VALUE * bidMultiplier * vulnerableMultiplier
+      : pointsPerTrick
+    this.isSmallSlamBid = contractBid.contractTricks === 6
+    this.isGrandSlamBid = contractBid.contractTricks === 7
+    this.biddingTeam = biddingTeam
     this.dummyTeam = dummyTeam
   }
-
 
   getPointsPerTrick(suit: SUIT, doubledBidMultiplier: number) {
     if (suit === SUIT.CLUBS || suit === SUIT.DIAMONDS) {

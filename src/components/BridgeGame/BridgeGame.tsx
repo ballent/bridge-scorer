@@ -2,26 +2,16 @@ import { createContext, useState } from 'react'
 import BidInput from '../BidInput/BidInput'
 import Scoresheet from '../Scoresheet/Scoresheet'
 import Rubber from '../../utils/Rubber/Rubber'
-import {
-  IContractBid,
-  IRubber,
-  IRubberGameState
-} from '../../utils/Rubber/Rubber.types'
+import { IContractBid, IRubber, IRubberGameState } from '../../utils/Rubber/Rubber.types'
 import BidHistory from '../BidHistory/BidHistory'
 
-const activeRubber: IRubber = JSON.parse(
-  localStorage.getItem('activeRubber') || '{}'
-)
-const rubber = Object.keys(activeRubber).length
-  ? new Rubber(activeRubber)
-  : new Rubber()
+const activeRubber: IRubber = JSON.parse(localStorage.getItem('activeRubber') || '{}')
+const rubber = Object.keys(activeRubber).length ? new Rubber(activeRubber) : new Rubber()
 
 export const RubberContext = createContext<Rubber>(rubber)
 
 const BridgeGame = () => {
-  const [rubberGameState, setRubberGameState] = useState<IRubberGameState>(
-    rubber.getState()
-  )
+  const [rubberGameState, setRubberGameState] = useState<IRubberGameState>(rubber.getState())
   const [rubberHistory, setRubberHistory] = useState<IContractBid[]>(
     rubberGameState.contractBidHistory
   )

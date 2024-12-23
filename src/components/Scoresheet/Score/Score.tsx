@@ -12,13 +12,7 @@ interface ScoreProps {
   onEditBid: (bidId: number, bid: IContractBid) => void
 }
 
-const Score = ({
-  bid,
-  showHighlight,
-  setScoreIdHovering,
-  onDeleteBid,
-  onEditBid
-}: ScoreProps) => {
+const Score = ({ bid, showHighlight, setScoreIdHovering, onDeleteBid, onEditBid }: ScoreProps) => {
   const [isHoveringScore, setIsHoveringScore] = useState(false)
   const [scoreMenuVisible, setScoreMenuVisible] = useState(false)
   const [isEditModalVisible, setIsEditModalVisible] = useState(false)
@@ -50,9 +44,7 @@ const Score = ({
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
       >
-        <span className={`score ${showHighlight ? 'bold' : null}`}>
-          {bid.score}
-        </span>
+        <span className={`score ${showHighlight ? 'bold' : null}`}>{bid.score}</span>
         {isHoveringScore && !scoreMenuVisible && (
           <button className="score-ellipse" onClick={handlePress}>
             •••

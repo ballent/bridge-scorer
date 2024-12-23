@@ -1,4 +1,4 @@
-import { IBidScore } from "../../../utils/Rubber/Rubber.types"
+import { IBidScore } from '../../../utils/Rubber/Rubber.types'
 import './ScoreMenu.css'
 
 interface ScoreMenuProps {
@@ -7,8 +7,12 @@ interface ScoreMenuProps {
   handleDeleteBid: (bidId: number) => void
   setIsEditModalVisible: (isVisible: boolean) => void
 }
-const ScoreMenu = ({ bid, setIsVisible, handleDeleteBid, setIsEditModalVisible }: ScoreMenuProps) => {
-
+const ScoreMenu = ({
+  bid,
+  setIsVisible,
+  handleDeleteBid,
+  setIsEditModalVisible
+}: ScoreMenuProps) => {
   return (
     <div key={'bid-menu' + bid.id} className="score-menu" onMouseLeave={() => setIsVisible(false)}>
       <button onClick={() => handleDeleteBid(bid.id)}>Delete bid</button>

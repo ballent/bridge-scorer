@@ -1,9 +1,9 @@
-import React, { useContext } from "react";
-import { createPortal } from "react-dom";
+import React, { useContext } from 'react'
+import { createPortal } from 'react-dom'
 import './EditBidModal.css'
-import { IContractBid } from "../../utils/Rubber/Rubber.types";
-import BidInput from "../BidInput/BidInput";
-import { RubberContext } from "../BridgeGame/BridgeGame";
+import { IContractBid } from '../../utils/Rubber/Rubber.types'
+import BidInput from '../BidInput/BidInput'
+import { RubberContext } from '../BridgeGame/BridgeGame'
 
 interface EditBidModalProps {
   bidId: number
@@ -12,11 +12,16 @@ interface EditBidModalProps {
   onEditBid: (bidId: number, bid: IContractBid) => void
 }
 
-const EditBidModal: React.FC<EditBidModalProps> = ({ bidId, isVisible, setIsVisible, onEditBid }) => {
+const EditBidModal: React.FC<EditBidModalProps> = ({
+  bidId,
+  isVisible,
+  setIsVisible,
+  onEditBid
+}) => {
   const rubber = useContext(RubberContext)
   const handleCloseModal = () => {
-    setIsVisible(false);
-  };
+    setIsVisible(false)
+  }
 
   const handleEditBid = (bid: IContractBid) => {
     onEditBid(bidId, bid)
@@ -24,13 +29,14 @@ const EditBidModal: React.FC<EditBidModalProps> = ({ bidId, isVisible, setIsVisi
 
   return (
     <>
-      {isVisible && createPortal(
-        <div className="modal">
-          <BidInput defaultBid={rubber.getContractBidById(bidId)} onSubmit={handleEditBid} />
-          <button onClick={handleCloseModal}>Close</button>
-        </div>,
-        document.body
-      )}
+      {isVisible &&
+        createPortal(
+          <div className="modal">
+            <BidInput defaultBid={rubber.getContractBidById(bidId)} onSubmit={handleEditBid} />
+            <button onClick={handleCloseModal}>Close</button>
+          </div>,
+          document.body
+        )}
     </>
   )
 }

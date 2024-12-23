@@ -48,9 +48,7 @@ interface BidInputProps {
 const BidInput: React.FC<BidInputProps> = ({ defaultBid = initialBid, onSubmit }) => {
   const [bidData, setBidData] = useState<IContractBid>(defaultBid)
 
-  const handleChange = (
-    e: ChangeEvent<HTMLInputElement | HTMLSelectElement>
-  ) => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value, type } = e.target
     const checked = type === 'checkbox' ? e.target.checked : undefined
     const val = !isNaN(Number(value)) ? Number(value) : value
@@ -114,12 +112,7 @@ const BidInput: React.FC<BidInputProps> = ({ defaultBid = initialBid, onSubmit }
 
       <div>
         <label htmlFor="suit">Suit:</label>
-        <select
-          id="suit"
-          name="suit"
-          value={bidData?.suit}
-          onChange={handleChange}
-        >
+        <select id="suit" name="suit" value={bidData?.suit} onChange={handleChange}>
           <option value={SUIT.NO_TRUMP}>No Trump</option>
           <option value={SUIT.CLUBS}>Clubs</option>
           <option value={SUIT.DIAMONDS}>Diamonds</option>
@@ -171,12 +164,7 @@ const BidInput: React.FC<BidInputProps> = ({ defaultBid = initialBid, onSubmit }
 
       <div>
         <label htmlFor="honorsWe">Honors we?</label>
-        <select
-          id="honorsWe"
-          name="honorsWe"
-          value={bidData?.honorsWe}
-          onChange={handleChange}
-        >
+        <select id="honorsWe" name="honorsWe" value={bidData?.honorsWe} onChange={handleChange}>
           <option value={0}>No honors</option>
           <option value={100}>100</option>
           <option value={150}>150</option>
