@@ -19,7 +19,6 @@ class Rubber {
   bidHistory: Bid[]
   gameIndex: number
   isGameOver: boolean
-  bidId: number
 
   constructor(rubber?: IRubber) {
     this.teamWe = rubber ? new RubberTeam(rubber.teamWe) : new RubberTeam()
@@ -28,7 +27,6 @@ class Rubber {
     this.bidHistory = rubber ? rubber.bidHistory : []
     this.gameIndex = rubber ? rubber.gameIndex : 0
     this.isGameOver = rubber ? rubber.isGameOver : false
-    this.bidId = rubber ? rubber.bidHistory.length : 0
   }
 
   getState() {
@@ -186,13 +184,13 @@ class Rubber {
       this.teamThey.scoreBelow.push([])
       this.gameIndex++
       this.isGameOver = this.vulnerableTeams.includes(contractBid.team)
-      this.isGameOver && this.finalizeGame(bidContext.biddingTeam)
+      this.isGameOver && this.finalizeGame(bidContext.biddingTeam, bidScore.id)
       !this.isGameOver && this.vulnerableTeams.push(contractBid.team)
     }
     return this
   }
 
-  finalizeGame(biddingTeam: RubberTeam) {
+  finalizeGame(biddingTeam: RubberTeam, bidId: number) {
     const slowRubber =
       this.vulnerableTeams.includes(TEAM.WE) && this.vulnerableTeams.includes(TEAM.THEY)
 
@@ -202,7 +200,7 @@ class Rubber {
     } rubber`
 
     biddingTeam.scoreAbove.push({
-      id: this.bidId,
+      id: bidId,
       scoreDescription,
       score: rubberBonus
     })
