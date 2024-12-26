@@ -1,0 +1,21 @@
+body {
+  margin: 0;
+  display: flex;
+  flex: 1;
+  min-width: 320px;
+  min-height: 100vh;
+  /* background-color: rgb(243, 243, 243); */
+  background-color: white
+}
+
+#root {
+  display: flex;
+  flex: 1;
+  justify-content: flex-start;
+  align-items: center;
+  flex-direction: column;
+}
+
+* {
+  font-family: Verdana, Geneva, Tahoma, sans-serif
+}

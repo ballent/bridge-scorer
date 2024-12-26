@@ -1,3 +1,8 @@
+.bid-history-container {
+  display: flex;
+  flex-direction: column;
+}
+
 .highlight-bid {
   font-size: 24px;
   font-weight: 700;

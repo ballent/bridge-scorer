@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { IBidScore, IContractBid } from '../../../utils/Rubber/Rubber.types'
-import EditBidModal from '../../EditBidModal/EditBidModal'
+import BidModal from '../../BidModal/BidModal'
 import ScoreMenu from '../ScoreMenu/ScoreMenu'
 import './Score.css'
 
@@ -9,7 +9,7 @@ interface ScoreProps {
   showHighlight: boolean
   setScoreIdHovering: (bidId: number | null) => void
   onDeleteBid: (bidId: number) => void
-  onEditBid: (bidId: number, bid: IContractBid) => void
+  onEditBid: (bid: IContractBid, bidId?: number) => void
 }
 
 const Score = ({ bid, showHighlight, setScoreIdHovering, onDeleteBid, onEditBid }: ScoreProps) => {
@@ -58,11 +58,12 @@ const Score = ({ bid, showHighlight, setScoreIdHovering, onDeleteBid, onEditBid 
             setIsEditModalVisible={setIsEditModalVisible}
           />
         )}
-        <EditBidModal
+        <BidModal
+          title='Edit bid'
           bidId={bid.id}
           isVisible={isEditModalVisible}
           setIsVisible={setIsEditModalVisible}
-          onEditBid={onEditBid}
+          onSubmitBid={onEditBid}
         />
       </div>
     </>

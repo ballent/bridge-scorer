@@ -1,0 +1,32 @@
+.select {
+  display: none;
+}
+
+.select-container {
+  display: flex;
+  background-color: rgb(236, 236, 236);
+  padding: 3px;
+  border-radius: 5px;
+}
+
+.select-option {
+  display: flex;
+  flex: 1;
+  justify-content: center;
+  border-radius: 5px;
+}
+
+.selected {
+  background-color: white;
+  box-shadow: 0px 0px 3px #aaaaaa;
+}
+
+.spacer {
+  width: 1.5px;
+  background-color: rgb(210, 210, 210);
+  margin: 1px 2px;
+}
+
+.red {
+  color: red
+}

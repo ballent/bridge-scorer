@@ -1,44 +1,50 @@
 import { useState, ChangeEvent, FormEvent } from 'react'
 import { IContractBid, SUIT, TEAM } from '../../utils/Rubber/Rubber.types'
+import ListSelect from '../ListSelect/ListSelect'
+import './BidInput.css'
+import TricksMadeInput from '../RangeInput/TricksMadeInput'
 
 const initialBid: IContractBid = {
   team: TEAM.WE,
   contractTricks: 1,
   tricksMade: 0,
   suit: SUIT.CLUBS,
-  isDoubled: false,
-  isRedoubled: false,
+  doubledMultiplier: 1,
   honorsWe: 0,
   honorsThey: 0
 }
 
-const contractTrickOptions = [
-  { value: 1, label: '1' },
-  { value: 2, label: '2' },
-  { value: 3, label: '3' },
-  { value: 4, label: '4' },
-  { value: 5, label: '5' },
-  { value: 6, label: '6' },
-  { value: 7, label: '7' }
+const teamOptions = [
+  { label: 'We', value: TEAM.WE },
+  { label: 'They', value: TEAM.THEY }
 ]
 
-const tricksMadeOptions = [
-  { value: -8, label: '-8' },
-  { value: -7, label: '-7' },
-  { value: -6, label: '-6' },
-  { value: -5, label: '-5' },
-  { value: -4, label: '-4' },
-  { value: -3, label: '-3' },
-  { value: -2, label: '-2' },
-  { value: -1, label: '-1' },
-  { value: 0, label: '=' },
-  { value: 1, label: '+1' },
-  { value: 2, label: '+2' },
-  { value: 3, label: '+3' },
-  { value: 4, label: '+4' },
-  { value: 5, label: '+5' },
-  { value: 6, label: '+6' }
+const contractTrickOptions = [
+  { label: '1', value: 1 },
+  { label: '2', value: 2 },
+  { label: '3', value: 3 },
+  { label: '4', value: 4 },
+  { label: '5', value: 5 },
+  { label: '6', value: 6 },
+  { label: '7', value: 7 }
 ]
+
+const suitOptions = [
+  { label: '♣', value: SUIT.CLUBS },
+  { label: '♦', value: SUIT.DIAMONDS, classStyle: 'red' },
+  { label: '♥', value: SUIT.HEARTS, classStyle: 'red' },
+  { label: '♠', value: SUIT.SPADES },
+  { label: 'NT', value: SUIT.NO_TRUMP }
+]
+
+const doubledOptions = [
+  { label: '-', value: 1 },
+  { label: 'X', value: 2 },
+  { label: 'XX', value: 4 }
+]
+
+const tricksMadeMin = -8
+const tricksMadeMax = 6
 
 interface BidInputProps {
   defaultBid?: IContractBid
@@ -48,15 +54,32 @@ interface BidInputProps {
 const BidInput: React.FC<BidInputProps> = ({ defaultBid = initialBid, onSubmit }) => {
   const [bidData, setBidData] = useState<IContractBid>(defaultBid)
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-    const { name, value, type } = e.target
-    const checked = type === 'checkbox' ? e.target.checked : undefined
-    const val = !isNaN(Number(value)) ? Number(value) : value
+  const handleChange = (e: ChangeEvent<HTMLInputElement> | 'increment' | 'decrement') => {
+    switch (e) {
+      case 'increment':
+        setBidData((prevData) => ({
+          ...prevData,
+          tricksMade:
+            prevData.tricksMade < tricksMadeMax ? prevData.tricksMade + 1 : prevData.tricksMade
+        }))
+        break
+      case 'decrement':
+        setBidData((prevData) => ({
+          ...prevData,
+          tricksMade:
+            prevData.tricksMade > tricksMadeMin ? prevData.tricksMade - 1 : prevData.tricksMade
+        }))
+        break
+      default:
+        const { name, value } = e.target
+        const val = !isNaN(Number(value)) ? Number(value) : value
 
-    setBidData((prevData) => ({
-      ...prevData,
-      [name]: checked !== undefined ? checked : val
-    }))
+        setBidData((prevData) => ({
+          ...prevData,
+          [name]: val
+        }))
+        break
+    }
   }
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
@@ -66,125 +89,45 @@ const BidInput: React.FC<BidInputProps> = ({ defaultBid = initialBid, onSubmit }
 
   return (
     <form onSubmit={handleSubmit}>
-      <div>
-        <label htmlFor="team">
-          <input
-            type="radio"
-            id="team"
+      <div className="bid-container">
+        <div className="bid-input">
+          <ListSelect
             name="team"
-            value={TEAM.WE}
-            onChange={handleChange}
-            checked={bidData.team === TEAM.WE}
-          />{' '}
-          WE
-        </label>
-        <label>
-          <input
-            type="radio"
-            id="team"
-            name="team"
-            value={TEAM.THEY}
-            onChange={handleChange}
-            checked={bidData.team === TEAM.THEY}
-          />{' '}
-          THEY
-        </label>
+            options={teamOptions}
+            value={bidData.team}
+            handleChange={handleChange}
+          />
+          <ListSelect
+            name="contractTricks"
+            options={contractTrickOptions}
+            value={bidData.contractTricks}
+            handleChange={handleChange}
+          />
+          <ListSelect
+            name="suit"
+            options={suitOptions}
+            value={bidData.suit}
+            handleChange={handleChange}
+          />
+          <ListSelect
+            name="doubledMultiplier"
+            options={doubledOptions}
+            value={bidData.doubledMultiplier}
+            handleChange={handleChange}
+          />
+        </div>
+        <div className="bid-input">
+          <TricksMadeInput
+            min={-8}
+            max={6}
+            value={bidData.tricksMade}
+            handleChange={handleChange}
+          />
+          <button className="submit" type="submit">
+            Submit
+          </button>
+        </div>
       </div>
-
-      <div>
-        <label htmlFor="contractTricks">Contract tricks:</label>
-        <select
-          id="contractTricks"
-          name="contractTricks"
-          value={bidData?.contractTricks}
-          onChange={handleChange}
-          required
-        >
-          {contractTrickOptions.map((option) => {
-            return (
-              <option key={option.value} value={option.value}>
-                {option.label}
-              </option>
-            )
-          })}
-        </select>
-      </div>
-
-      <div>
-        <label htmlFor="suit">Suit:</label>
-        <select id="suit" name="suit" value={bidData?.suit} onChange={handleChange}>
-          <option value={SUIT.NO_TRUMP}>No Trump</option>
-          <option value={SUIT.CLUBS}>Clubs</option>
-          <option value={SUIT.DIAMONDS}>Diamonds</option>
-          <option value={SUIT.HEARTS}>Hearts</option>
-          <option value={SUIT.SPADES}>Spades</option>
-        </select>
-      </div>
-      <div>
-        <label htmlFor="tricksMade">Tricks Made:</label>
-        <select
-          id="tricksMade"
-          name="tricksMade"
-          value={bidData?.tricksMade}
-          onChange={handleChange}
-        >
-          {tricksMadeOptions.map((option) => {
-            return (
-              <option key={option.value} value={option.value}>
-                {option.label}
-              </option>
-            )
-          })}
-        </select>
-      </div>
-
-      <div>
-        <label htmlFor="isDoubled">Doubled?</label>
-        <input
-          type="checkbox"
-          id="isDoubled"
-          name="isDoubled"
-          key="isDoubled"
-          checked={bidData?.isDoubled}
-          onChange={handleChange}
-        />
-      </div>
-
-      <div>
-        <label htmlFor="isRedoubled">Redoubled?</label>
-        <input
-          type="checkbox"
-          id="isRedoubled"
-          name="isRedoubled"
-          key="isRedoubled"
-          checked={bidData?.isRedoubled}
-          onChange={handleChange}
-        />
-      </div>
-
-      <div>
-        <label htmlFor="honorsWe">Honors we?</label>
-        <select id="honorsWe" name="honorsWe" value={bidData?.honorsWe} onChange={handleChange}>
-          <option value={0}>No honors</option>
-          <option value={100}>100</option>
-          <option value={150}>150</option>
-        </select>
-      </div>
-
-      <div>
-        <label htmlFor="honorsThey">Honors they?</label>
-        <select
-          id="honorsThey"
-          name="honorsThey"
-          value={bidData?.honorsThey}
-          onChange={handleChange}
-        >
-          <option value={0}>No honors</option>
-          <option value={100}>100</option>
-          <option value={150}>150</option>
-        </select>
-      </div>
-      <button type="submit">Submit</button>
     </form>
   )
 }

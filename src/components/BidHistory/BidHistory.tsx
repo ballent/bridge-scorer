@@ -10,7 +10,8 @@ interface BidHistoryProps {
 
 const BidHistory: React.FC<BidHistoryProps> = ({ bids, scoreIdHovering, jumpTo }) => {
   return (
-    <div>
+    <div className='bid-history-container'>
+      Bids
       {bids.map((bid, i) => {
         return (
           <Fragment key={'bid-' + i}>

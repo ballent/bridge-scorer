@@ -9,7 +9,7 @@ interface ScoresheetProps {
   scoreIdHovering: number | null
   setScoreIdHovering: (id: number | null) => void
   onDeleteBid: (id: number) => void
-  onEditBid: (bidId: number, bid: IContractBid) => void
+  onEditBid: (bid: IContractBid, bidId?: number) => void
 }
 
 const Scoresheet: React.FC<ScoresheetProps> = ({

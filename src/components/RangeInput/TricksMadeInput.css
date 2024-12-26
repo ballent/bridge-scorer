@@ -1,0 +1,25 @@
+.container {
+  display: flex;
+  flex-direction: row;
+}
+
+.col {
+  display: flex;
+  flex-direction: column;
+}
+
+.selection {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 18;
+  min-width: 25px;
+}
+
+input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  background: transparent;
+  cursor: pointer;
+  width: 15rem;
+}

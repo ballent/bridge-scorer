@@ -1,9 +1,11 @@
 import { createContext, useState } from 'react'
-import BidInput from '../BidInput/BidInput'
 import Scoresheet from '../Scoresheet/Scoresheet'
 import Rubber from '../../utils/Rubber/Rubber'
 import { IContractBid, IRubber, IRubberGameState } from '../../utils/Rubber/Rubber.types'
 import BidHistory from '../BidHistory/BidHistory'
+import BidModal from '../BidModal/BidModal'
+import './BridgeGame.css'
+import { createPortal } from 'react-dom'
 
 const activeRubber: IRubber = JSON.parse(localStorage.getItem('activeRubber') || '{}')
 const rubber = Object.keys(activeRubber).length ? new Rubber(activeRubber) : new Rubber()
@@ -16,22 +18,19 @@ const BridgeGame = () => {
     rubberGameState.contractBidHistory
   )
   const [scoreIdHovering, setScoreIdHovering] = useState<null | number>(null)
+  const [bidModalVisible, setBidModalVisible] = useState(false)
 
-  const handleSubmitBid = (bid: IContractBid) => {
-    const newGameState = rubber.sumbitBid(bid).getState()
-    setRubberGameState(newGameState)
-    setRubberHistory(newGameState.contractBidHistory)
+  const addOrUpdateBid = (bid: IContractBid, bidId?: number) => {
+    const updatedGame = bidId === undefined ? rubber.sumbitBid(bid) : rubber.editBid(bid, bidId)
+    const updatedGameState = updatedGame.getState()
+
+    setRubberGameState(updatedGameState)
+    setRubberHistory(updatedGameState.contractBidHistory)
     localStorage.setItem('activeRubber', JSON.stringify(rubber))
   }
 
   const handleDeleteBid = (bidId: number) => {
     setRubberGameState(rubber.deleteBid(bidId).getState())
-  }
-
-  const handleEditBid = (bidId: number, bid: IContractBid) => {
-    const newGameState = rubber.editBid(bidId, bid).getState()
-    setRubberGameState(newGameState)
-    setRubberHistory(newGameState.contractBidHistory)
   }
 
   const resetRubber = () => {
@@ -48,18 +47,21 @@ const BridgeGame = () => {
 
   return (
     <RubberContext.Provider value={rubber}>
-      <BidInput onSubmit={handleSubmitBid} />
-      <Scoresheet
-        scoresBelow={rubberGameState.scoresBelow}
-        scoresAbove={rubberGameState.scoresAbove}
-        scoreIdHovering={scoreIdHovering}
-        setScoreIdHovering={setScoreIdHovering}
-        onDeleteBid={handleDeleteBid}
-        onEditBid={handleEditBid}
-      />
-      <BidHistory bids={rubberHistory} scoreIdHovering={scoreIdHovering} jumpTo={jumpToBid} />
+      <div className='game-container'>
+        <Scoresheet
+          scoresBelow={rubberGameState.scoresBelow}
+          scoresAbove={rubberGameState.scoresAbove}
+          scoreIdHovering={scoreIdHovering}
+          setScoreIdHovering={setScoreIdHovering}
+          onDeleteBid={handleDeleteBid}
+          onEditBid={addOrUpdateBid}
+        />
+        <BidHistory bids={rubberHistory} scoreIdHovering={scoreIdHovering} jumpTo={jumpToBid} />
+      </div>
+      {createPortal(<button className='add-bid' onClick={() => setBidModalVisible(true)}>+</button>, document.body)}
       <button onClick={() => resetRubber()}>Reset game</button>
       <div>{rubberGameState.isGameOver && 'Game over'}</div>
+      <BidModal title="Create bid" isVisible={bidModalVisible} setIsVisible={setBidModalVisible} onSubmitBid={addOrUpdateBid} />
     </RubberContext.Provider>
   )
 }

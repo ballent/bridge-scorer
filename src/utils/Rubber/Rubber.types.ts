@@ -35,8 +35,7 @@ export interface IContractBid {
   contractTricks: number
   tricksMade: number
   suit: SUIT
-  isDoubled: boolean
-  isRedoubled: boolean
+  doubledMultiplier: 1 | 2 | 4
   honorsWe: number
   honorsThey: number
 }

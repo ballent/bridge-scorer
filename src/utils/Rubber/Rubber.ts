@@ -243,7 +243,7 @@ class Rubber {
     return this.getContractBidHistory()[bidId]
   }
 
-  editBid(bidId: number, bid: IContractBid) {
+  editBid(bid: IContractBid, bidId: number) {
     const contractBids = this.getContractBidHistory()
     contractBids[bidId] = bid
     return this.jumpToGameState(contractBids)

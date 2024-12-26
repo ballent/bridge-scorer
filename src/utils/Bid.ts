@@ -23,8 +23,8 @@ class Bid {
     biddingTeam: RubberTeam,
     dummyTeam: RubberTeam
   ) {
-    const bidMultiplier = contractBid.isRedoubled ? 4 : contractBid.isDoubled ? 2 : 1
-    const isBidDoubledOrRedoubled = contractBid.isDoubled || contractBid.isRedoubled
+    const bidMultiplier = contractBid.doubledMultiplier
+    const isBidDoubledOrRedoubled = contractBid.doubledMultiplier > 1
     const vulnerableMultiplier = isBiddingTeamVulnerable ? 2 : 1
     const pointsPerTrick = this.getPointsPerTrick(contractBid.suit, bidMultiplier)
 
