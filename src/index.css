@@ -49,6 +49,11 @@ body {
   margin-bottom: 10px;
 }
 
+.modal-title {
+  display: flex;
+  align-items: center;
+}
+
 .close {
   padding: 0;
   border: none;

@@ -7,6 +7,7 @@ import BidModal from '../BidModal/BidModal'
 import './BridgeGame.css'
 import Reset from '../../assets/Reset'
 import ConfirmationModal from '../ConfirmationModal/ConfirmationModal'
+import Bid from '../../utils/Bid'
 
 const activeRubber: IRubber = JSON.parse(localStorage.getItem('activeRubber') || '{}')
 const rubber = Object.keys(activeRubber).length ? new Rubber(activeRubber) : new Rubber()
@@ -15,9 +16,7 @@ export const RubberContext = createContext<Rubber>(rubber)
 
 const BridgeGame = () => {
   const [rubberGameState, setRubberGameState] = useState<IRubberGameState>(rubber.getState())
-  const [rubberHistory, setRubberHistory] = useState<IContractBid[]>(
-    rubberGameState.contractBidHistory
-  )
+  const [rubberHistory, setRubberHistory] = useState<Bid[]>(rubberGameState.bidHistory)
   const [scoreIdHovering, setScoreIdHovering] = useState<null | number>(null)
   const [bidModalVisible, setBidModalVisible] = useState(false)
   const [confirmationModalVisible, setConfirmationModalVisible] = useState(false)
@@ -27,12 +26,14 @@ const BridgeGame = () => {
     const updatedGameState = updatedGame.getState()
 
     setRubberGameState(updatedGameState)
-    setRubberHistory(updatedGameState.contractBidHistory)
+    setRubberHistory(updatedGameState.bidHistory)
     localStorage.setItem('activeRubber', JSON.stringify(rubber))
   }
 
   const handleDeleteBid = (bidId: number) => {
-    setRubberGameState(rubber.deleteBid(bidId).getState())
+    const updatedGameState = rubber.deleteBid(bidId).getState()
+    setRubberGameState(updatedGameState)
+    setRubberHistory(updatedGameState.bidHistory) 
   }
 
   const resetRubber = () => {
@@ -40,7 +41,7 @@ const BridgeGame = () => {
     localStorage.removeItem('activeRubber')
     const newGameState = rubber.getState()
     setRubberGameState(newGameState)
-    setRubberHistory(newGameState.contractBidHistory)
+    setRubberHistory(newGameState.bidHistory)
   }
 
   const jumpToBid = (bids: IContractBid[]) => {
@@ -49,7 +50,7 @@ const BridgeGame = () => {
 
   return (
     <RubberContext.Provider value={rubber}>
-      <div className='game-container'>
+      <div className="game-container">
         <Scoresheet
           scoresBelow={rubberGameState.scoresBelow}
           scoresAbove={rubberGameState.scoresAbove}
@@ -58,13 +59,36 @@ const BridgeGame = () => {
           onDeleteBid={handleDeleteBid}
           onEditBid={addOrUpdateBid}
         />
-        <BidHistory bids={rubberHistory} scoreIdHovering={scoreIdHovering} jumpTo={jumpToBid} />
+        <BidHistory
+          bids={rubberHistory}
+          scoreIdHovering={scoreIdHovering}
+          setScoreIdHovering={setScoreIdHovering}
+          onEditBid={addOrUpdateBid}
+          onDeleteBid={handleDeleteBid}
+          jumpTo={jumpToBid}
+        />
       </div>
-      {!rubberGameState.isGameOver && <button className='add-bid' onClick={() => setBidModalVisible(true)}>+</button>}
-      <button className='reset-game' onClick={() => setConfirmationModalVisible(true)}><Reset color={'white'} /></button>
+      {!rubberGameState.isGameOver && (
+        <button className="add-bid" onClick={() => setBidModalVisible(true)}>
+          +
+        </button>
+      )}
+      <button className="reset-game" onClick={() => setConfirmationModalVisible(true)}>
+        <Reset color={'white'} />
+      </button>
       <div>{rubberGameState.isGameOver && 'Game over'}</div>
-      <ConfirmationModal title='Reset game?' isVisible={confirmationModalVisible} setIsVisible={setConfirmationModalVisible} onConfirm={resetRubber} />
-      <BidModal title="Create bid" isVisible={bidModalVisible} setIsVisible={setBidModalVisible} onSubmitBid={addOrUpdateBid} />
+      <ConfirmationModal
+        title="Reset game?"
+        isVisible={confirmationModalVisible}
+        setIsVisible={setConfirmationModalVisible}
+        onConfirm={resetRubber}
+      />
+      <BidModal
+        title="Create bid"
+        isVisible={bidModalVisible}
+        setIsVisible={setBidModalVisible}
+        onSubmitBid={addOrUpdateBid}
+      />
     </RubberContext.Provider>
   )
 }

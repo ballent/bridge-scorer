@@ -3,6 +3,7 @@ import { IBidScore, IContractBid } from '../../../utils/Rubber/Rubber.types'
 import BidModal from '../../BidModal/BidModal'
 import ScoreMenu from '../ScoreMenu/ScoreMenu'
 import './Score.css'
+import Info from '../../../assets/Info'
 
 interface ScoreProps {
   bid: IBidScore
@@ -47,7 +48,7 @@ const Score = ({ bid, showHighlight, setScoreIdHovering, onDeleteBid, onEditBid 
         <span className={`score ${showHighlight ? 'bold' : null}`}>{bid.score}</span>
         {isHoveringScore && !scoreMenuVisible && (
           <button className="score-ellipse" onClick={handlePress}>
-            •••
+            <Info size={14} />
           </button>
         )}
         {scoreMenuVisible && (

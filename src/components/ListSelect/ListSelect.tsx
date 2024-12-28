@@ -1,4 +1,4 @@
-import { ChangeEvent, Fragment, useState } from 'react'
+import { ChangeEvent, CSSProperties, Fragment, useState } from 'react'
 import './ListSelect.css'
 
 interface ListSelectProps {
@@ -11,7 +11,7 @@ interface ListSelectProps {
 interface SelectOption {
   label: string
   value: string | number
-  classStyle?: string
+  style?: CSSProperties
 }
 
 const ListSelect = ({name, options, value, handleChange}: ListSelectProps) => {
@@ -27,7 +27,7 @@ const ListSelect = ({name, options, value, handleChange}: ListSelectProps) => {
       {options.map((element, idx) => {
         return (
           <Fragment key={`list-select-${idx}`}>
-            <label htmlFor={name + element.label} className={`select-option ${selected === idx ? 'selected' : null} ${element.classStyle ? element.classStyle : null}`}>
+            <label htmlFor={name + element.label} className={`select-option ${selected === idx ? 'selected' : null}`} style={element.style}>
               <input
                 className={`select`}
                 type="radio"

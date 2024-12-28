@@ -33,8 +33,8 @@ const contractTrickOptions = [
 
 const suitOptions = [
   { label: '♣', value: SUIT.CLUBS },
-  { label: '♦', value: SUIT.DIAMONDS, classStyle: 'red' },
-  { label: '♥', value: SUIT.HEARTS, classStyle: 'red' },
+  { label: '♦', value: SUIT.DIAMONDS, style: {color: 'red'} },
+  { label: '♥', value: SUIT.HEARTS, style: {color: 'red'} },
   { label: '♠', value: SUIT.SPADES },
   { label: 'NT', value: SUIT.NO_TRUMP }
 ]

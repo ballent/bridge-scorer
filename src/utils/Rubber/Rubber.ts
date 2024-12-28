@@ -39,7 +39,7 @@ class Rubber {
         teamWe: this.teamWe.getScoreBelow(),
         teamThey: this.teamThey.getScoreBelow()
       },
-      contractBidHistory: this.getContractBidHistory(),
+      bidHistory: this.bidHistory,
       isGameOver: this.isGameOver
     }
   }

@@ -13,7 +13,7 @@ export interface IRubber {
 export interface IRubberGameState {
   scoresAbove: { teamWe: IBidScore[]; teamThey: IBidScore[] }
   scoresBelow: { teamWe: IBidScore[][]; teamThey: IBidScore[][] }
-  contractBidHistory: IContractBid[]
+  bidHistory: Bid[]
   isGameOver: boolean
 }
 

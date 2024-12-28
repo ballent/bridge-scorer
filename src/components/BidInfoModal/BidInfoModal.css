@@ -1,0 +1,13 @@
+.edit {
+  display: flex;
+  align-items: center;
+  border: none;
+  background: transparent;
+  background-color: green;
+  border-radius: 15px;
+  color: white;
+  cursor: pointer;
+  font-size: 12px;
+  gap: 5px;
+  padding: 3px 8px;
+}

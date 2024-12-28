@@ -15,6 +15,9 @@ class Bid {
   isGrandSlamBid: boolean
   biddingTeam: RubberTeam
   dummyTeam: RubberTeam
+  scoreBelow: number
+  biddingTeamScoreAbove: number[] | null
+  dummyTeamScoreAbove: number[] | null
 
   constructor(
     id: number,
@@ -27,6 +30,7 @@ class Bid {
     const isBidDoubledOrRedoubled = contractBid.doubledMultiplier > 1
     const vulnerableMultiplier = isBiddingTeamVulnerable ? 2 : 1
     const pointsPerTrick = this.getPointsPerTrick(contractBid.suit, bidMultiplier)
+    const noTrumpBonus = contractBid.suit === SUIT.NO_TRUMP ? 10 : 0
 
     this.id = id
     this.contractBid = contractBid
@@ -42,6 +46,9 @@ class Bid {
     this.isGrandSlamBid = contractBid.contractTricks === 7
     this.biddingTeam = biddingTeam
     this.dummyTeam = dummyTeam
+    this.scoreBelow = pointsPerTrick * contractBid.contractTricks + noTrumpBonus
+    this.biddingTeamScoreAbove = this.calculateBiddingTeamScoreAbove()
+    this.dummyTeamScoreAbove = this.calculateDummyTeamScoreAbove()
   }
 
   getPointsPerTrick(suit: SUIT, doubledBidMultiplier: number) {
@@ -49,6 +56,14 @@ class Bid {
       return POINTS_MINOR * doubledBidMultiplier
     }
     return POINTS_MAJOR * doubledBidMultiplier
+  }
+
+  calculateBiddingTeamScoreAbove() {
+    return []
+  }
+
+  calculateDummyTeamScoreAbove() {
+    return []
   }
 }
 

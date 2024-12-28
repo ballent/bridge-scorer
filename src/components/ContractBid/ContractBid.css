@@ -1,0 +1,11 @@
+.team {
+  width: 25px;
+  text-align: center;
+}
+
+.contract-bid {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+}
