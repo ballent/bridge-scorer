@@ -1,6 +1,8 @@
 import { Fragment } from 'react/jsx-runtime'
 import { IContractBid } from '../../utils/Rubber/Rubber.types'
 import './BidHistory.css'
+import ContractResult from '../ContractResult/ContractResult'
+import { displayDoubledMultiplier } from '../../utils/displayDoubleMulitplier'
 
 interface BidHistoryProps {
   bids: IContractBid[]
@@ -10,16 +12,20 @@ interface BidHistoryProps {
 
 const BidHistory: React.FC<BidHistoryProps> = ({ bids, scoreIdHovering, jumpTo }) => {
   return (
-    <div className='bid-history-container'>
-      Bids
+    <div className="bid-history-container">
+      <span className="title">Bids</span>
       {bids.map((bid, i) => {
         return (
           <Fragment key={'bid-' + i}>
             <button
-              className={`${scoreIdHovering === i ? 'highlight-bid' : null}`}
+              className={`bid-button ${scoreIdHovering === i ? 'highlight-bid' : null}`}
               onClick={() => jumpTo(bids.slice(0, i + 1))}
             >
-              {bid.suit} {bid.contractTricks} {bid.tricksMade ? bid.tricksMade : ''}
+              <span className="centered">
+                {bid.team} {bid.contractTricks}
+                {bid.suit} <ContractResult value={bid.tricksMade} size={24} style={{marginLeft: '7px'}} />
+              </span>
+              {displayDoubledMultiplier(bid.doubledMultiplier)}
             </button>
           </Fragment>
         )

@@ -5,7 +5,8 @@ import { IContractBid, IRubber, IRubberGameState } from '../../utils/Rubber/Rubb
 import BidHistory from '../BidHistory/BidHistory'
 import BidModal from '../BidModal/BidModal'
 import './BridgeGame.css'
-import { createPortal } from 'react-dom'
+import Reset from '../../assets/Reset'
+import ConfirmationModal from '../ConfirmationModal/ConfirmationModal'
 
 const activeRubber: IRubber = JSON.parse(localStorage.getItem('activeRubber') || '{}')
 const rubber = Object.keys(activeRubber).length ? new Rubber(activeRubber) : new Rubber()
@@ -19,6 +20,7 @@ const BridgeGame = () => {
   )
   const [scoreIdHovering, setScoreIdHovering] = useState<null | number>(null)
   const [bidModalVisible, setBidModalVisible] = useState(false)
+  const [confirmationModalVisible, setConfirmationModalVisible] = useState(false)
 
   const addOrUpdateBid = (bid: IContractBid, bidId?: number) => {
     const updatedGame = bidId === undefined ? rubber.sumbitBid(bid) : rubber.editBid(bid, bidId)
@@ -58,9 +60,10 @@ const BridgeGame = () => {
         />
         <BidHistory bids={rubberHistory} scoreIdHovering={scoreIdHovering} jumpTo={jumpToBid} />
       </div>
-      {createPortal(<button className='add-bid' onClick={() => setBidModalVisible(true)}>+</button>, document.body)}
-      <button onClick={() => resetRubber()}>Reset game</button>
+      {!rubberGameState.isGameOver && <button className='add-bid' onClick={() => setBidModalVisible(true)}>+</button>}
+      <button className='reset-game' onClick={() => setConfirmationModalVisible(true)}><Reset color={'white'} /></button>
       <div>{rubberGameState.isGameOver && 'Game over'}</div>
+      <ConfirmationModal title='Reset game?' isVisible={confirmationModalVisible} setIsVisible={setConfirmationModalVisible} onConfirm={resetRubber} />
       <BidModal title="Create bid" isVisible={bidModalVisible} setIsVisible={setBidModalVisible} onSubmitBid={addOrUpdateBid} />
     </RubberContext.Provider>
   )

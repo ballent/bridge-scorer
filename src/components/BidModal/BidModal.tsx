@@ -1,6 +1,5 @@
 import React, { useContext } from 'react'
 import { createPortal } from 'react-dom'
-import './BidModal.css'
 import { IContractBid } from '../../utils/Rubber/Rubber.types'
 import BidInput from '../BidInput/BidInput'
 import { RubberContext } from '../BridgeGame/BridgeGame'
@@ -37,13 +36,16 @@ const BidModal: React.FC<BidModalProps> = ({
     <>
       {isVisible &&
         createPortal(
-          <div className="modal">
-            <div className='header'>
-              {title}
-              <button className='close' onClick={handleCloseModal}><img src={Close} alt='Close' /></button>
+          <>
+            <div onClick={handleCloseModal} className='backdrop' />
+            <div className="modal">
+              <div className='header'>
+                {title}
+                <button className='close' onClick={handleCloseModal}><img src={Close} alt='Close' /></button>
+              </div>
+              <BidInput defaultBid={defaultBid} submitText={bidId !== undefined ? 'Save' : undefined} onSubmit={handleSubmitBid} />
             </div>
-            <BidInput defaultBid={defaultBid} onSubmit={handleSubmitBid} />
-          </div>,
+          </>,
           document.body
         )}
     </>

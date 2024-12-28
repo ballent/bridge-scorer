@@ -1,0 +1,60 @@
+.container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.col {
+  display: flex;
+  flex-direction: column;
+}
+
+.selection {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 22px;
+  width: 100px;
+}
+
+.tricks-made-range {
+  /* removing default appearance */
+  -webkit-appearance: none;
+  appearance: none; 
+  /* creating a custom design */
+  width: 100%;
+  cursor: pointer;
+  outline: none;
+  border-radius: 15px;
+  margin: 0;
+  
+  /* New additions */
+  height: 6px;
+}
+
+.tricks-made-range::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  height: 30px;
+  width: 13px;
+  background-color: black;
+  border: 5px solid white;
+  border-radius: 3px;
+  outline: 1px solid rgb(73, 174, 228);
+  /* border-radius: 50%; */
+}
+
+.tricks-made-button {
+  border: none;
+  outline: 1px solid rgb(73, 174, 228);
+  color: black;
+  height: 30px;
+  width: 30px;
+  border-radius: 5px;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.tricks-made-button:first-child {
+  margin-bottom: 5px;
+}
+

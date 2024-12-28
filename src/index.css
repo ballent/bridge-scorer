@@ -4,7 +4,6 @@ body {
   flex: 1;
   min-width: 320px;
   min-height: 100vh;
-  /* background-color: rgb(243, 243, 243); */
   background-color: white
 }
 
@@ -18,4 +17,43 @@ body {
 
 * {
   font-family: Verdana, Geneva, Tahoma, sans-serif
+}
+
+/* Modal styles */
+.backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal {
+  display: block;
+  width: 300px;
+  box-shadow: rgba(100, 100, 111, 0.3) 0px 7px 29px 0px;
+  background-color: rgb(243, 243, 243);
+  border: 2px solid rgb(240, 240, 240);
+  border-radius: 12px;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  padding: 15px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.close {
+  padding: 0;
+  border: none;
+  background-color: transparent;
+  color: white;
+  text-decoration: none;
+  cursor: pointer;
 }

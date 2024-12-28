@@ -2,9 +2,7 @@ table {
   border-collapse: collapse;
   table-layout: auto;
 }
-.break {
-  border: 1px solid black;
-}
+
 th, td {
   height: 30px;
   width: 75px;
@@ -18,4 +16,18 @@ table tr th:first-child {
 table tr td:last-child,
 table tr th:last-child {
   border-left: 1px solid black;
+}
+
+.break {
+  border: 1px solid black;
+}
+
+.scoresheet-container {
+  display: flex;
+  flex: 1.5;
+  justify-content: center;
+}
+
+.score-above {
+  vertical-align: bottom;
 }

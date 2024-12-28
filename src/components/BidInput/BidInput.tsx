@@ -2,7 +2,9 @@ import { useState, ChangeEvent, FormEvent } from 'react'
 import { IContractBid, SUIT, TEAM } from '../../utils/Rubber/Rubber.types'
 import ListSelect from '../ListSelect/ListSelect'
 import './BidInput.css'
-import TricksMadeInput from '../RangeInput/TricksMadeInput'
+import TricksMadeInput from '../TricksMadeInput/TricksMadeInput'
+import CaretDown from '../../assets/CaretDown'
+import CaretUp from '../../assets/CaretUp'
 
 const initialBid: IContractBid = {
   team: TEAM.WE,
@@ -43,16 +45,28 @@ const doubledOptions = [
   { label: 'XX', value: 4 }
 ]
 
+const honorsOptions = [
+  { label: '-', value: 0 },
+  { label: '100', value: 100 },
+  { label: '150', value: 150 }
+]
+
 const tricksMadeMin = -8
 const tricksMadeMax = 6
 
 interface BidInputProps {
   defaultBid?: IContractBid
+  submitText?: string
   onSubmit: (bid: IContractBid) => void
 }
 
-const BidInput: React.FC<BidInputProps> = ({ defaultBid = initialBid, onSubmit }) => {
+const BidInput: React.FC<BidInputProps> = ({
+  defaultBid = initialBid,
+  submitText = 'Submit',
+  onSubmit
+}) => {
   const [bidData, setBidData] = useState<IContractBid>(defaultBid)
+  const [honorsVisible, setHonorsVisible] = useState(Boolean(defaultBid.honorsWe || defaultBid.honorsThey))
 
   const handleChange = (e: ChangeEvent<HTMLInputElement> | 'increment' | 'decrement') => {
     switch (e) {
@@ -73,7 +87,6 @@ const BidInput: React.FC<BidInputProps> = ({ defaultBid = initialBid, onSubmit }
       default:
         const { name, value } = e.target
         const val = !isNaN(Number(value)) ? Number(value) : value
-
         setBidData((prevData) => ({
           ...prevData,
           [name]: val
@@ -91,42 +104,87 @@ const BidInput: React.FC<BidInputProps> = ({ defaultBid = initialBid, onSubmit }
     <form onSubmit={handleSubmit}>
       <div className="bid-container">
         <div className="bid-input">
-          <ListSelect
-            name="team"
-            options={teamOptions}
-            value={bidData.team}
-            handleChange={handleChange}
-          />
-          <ListSelect
-            name="contractTricks"
-            options={contractTrickOptions}
-            value={bidData.contractTricks}
-            handleChange={handleChange}
-          />
-          <ListSelect
-            name="suit"
-            options={suitOptions}
-            value={bidData.suit}
-            handleChange={handleChange}
-          />
-          <ListSelect
-            name="doubledMultiplier"
-            options={doubledOptions}
-            value={bidData.doubledMultiplier}
-            handleChange={handleChange}
-          />
+          <span className="input-title">Contract</span>
+          <div className="bid-input-content">
+            <ListSelect
+              name="team"
+              options={teamOptions}
+              value={bidData.team}
+              handleChange={handleChange}
+            />
+            <ListSelect
+              name="contractTricks"
+              options={contractTrickOptions}
+              value={bidData.contractTricks}
+              handleChange={handleChange}
+            />
+            <ListSelect
+              name="suit"
+              options={suitOptions}
+              value={bidData.suit}
+              handleChange={handleChange}
+            />
+            <ListSelect
+              name="doubledMultiplier"
+              options={doubledOptions}
+              value={bidData.doubledMultiplier}
+              handleChange={handleChange}
+            />
+          </div>
         </div>
         <div className="bid-input">
-          <TricksMadeInput
-            min={-8}
-            max={6}
-            value={bidData.tricksMade}
-            handleChange={handleChange}
-          />
-          <button className="submit" type="submit">
-            Submit
+          <button
+            type="button"
+            className="caret-down"
+            onClick={() => setHonorsVisible(!honorsVisible)}
+          >
+            <span className={`${honorsVisible ? 'input-title' : 'input-collapsed'}`}>
+              Honors{' '}
+              {honorsVisible ? (
+                <CaretUp color="white" size={14} />
+              ) : (
+                <CaretDown color="white" size={14} />
+              )}
+            </span>
           </button>
+          {honorsVisible && (
+            <div className="bid-input-content">
+              <div className='honors'>
+                <span className='honors-title'>We:</span>
+                <ListSelect
+                  name={'honorsWe'}
+                  options={honorsOptions}
+                  value={bidData.honorsWe}
+                  handleChange={handleChange}
+                />
+              </div>
+              <div className='honors'>
+                <span className='honors-title'>They:</span>
+                <ListSelect
+                  name={'honorsThey'}
+                  options={honorsOptions}
+                  value={bidData.honorsThey}
+                  handleChange={handleChange}
+                />
+              </div>
+            </div>
+          )}
         </div>
+        <div className="bid-input">
+          <span className="input-title">Result</span>
+          <div className="bid-input-content">
+            <TricksMadeInput
+              name="tricksMade"
+              min={-8}
+              max={6}
+              value={bidData.tricksMade}
+              handleChange={handleChange}
+            />
+          </div>
+        </div>
+        <button className="submit" type="submit">
+          {submitText}
+        </button>
       </div>
     </form>
   )

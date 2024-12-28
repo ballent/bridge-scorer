@@ -27,11 +27,11 @@ const ListSelect = ({name, options, value, handleChange}: ListSelectProps) => {
       {options.map((element, idx) => {
         return (
           <Fragment key={`list-select-${idx}`}>
-            <label htmlFor={element.label} className={`select-option ${selected === idx ? 'selected' : null} ${element.classStyle ? element.classStyle : null}`}>
+            <label htmlFor={name + element.label} className={`select-option ${selected === idx ? 'selected' : null} ${element.classStyle ? element.classStyle : null}`}>
               <input
                 className={`select`}
                 type="radio"
-                id={element.label}
+                id={name + element.label}
                 name={name}
                 value={element.value}
                 onChange={e => handleSelection(e, idx)}
