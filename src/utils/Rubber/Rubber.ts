@@ -49,13 +49,13 @@ class Rubber {
 
   createBidContext(bid: IContractBid) {
     const biddingTeam = bid.team === TEAM.WE ? this.teamWe : this.teamThey
-    const dummyTeam = bid.team === TEAM.WE ? this.teamThey : this.teamWe
+    const nonBiddingTeam = bid.team === TEAM.WE ? this.teamThey : this.teamWe
     const bidContext = new Bid(
       this.bidHistory.length,
       bid,
       this.vulnerableTeams.includes(bid.team),
       biddingTeam,
-      dummyTeam
+      nonBiddingTeam
     )
 
     this.bidHistory.push(bidContext)
@@ -65,11 +65,11 @@ class Rubber {
   calculateBidPoints(bidContext: Bid) {
     const contractBid = bidContext.contractBid
     // add any score below
-    bidContext.biddingTeam.scoreBelow[this.gameIndex].push(bidContext.scoreBelow)
+    bidContext.scoreBelow.score > 0 && bidContext.biddingTeam.scoreBelow[this.gameIndex].push(bidContext.scoreBelow)
 
     // add any scores above and honors points
     bidContext.biddingTeam.scoreAbove.push(...bidContext.biddingTeamScoreAbove)
-    bidContext.dummyTeam.scoreAbove.push(...bidContext.dummyTeamScoreAbove)
+    bidContext.nonBiddingTeam.scoreAbove.push(...bidContext.nonBiddingTeamScoreAbove)
 
     if (this.isGameWin(bidContext.biddingTeam.scoreBelow[this.gameIndex])) {
       this.teamWe.scoreBelow.push([])

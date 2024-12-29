@@ -38,7 +38,7 @@ const BidModal: React.FC<BidModalProps> = ({
         createPortal(
           <>
             <div onClick={handleCloseModal} className='backdrop' />
-            <div className="modal">
+            <div className="modal-content">
               <div className='header'>
                 {title}
                 <button className='close' onClick={handleCloseModal}><img src={Close} alt='Close' /></button>
