@@ -8,6 +8,7 @@ import './BridgeGame.css'
 import Reset from '../../assets/Reset'
 import ConfirmationModal from '../ConfirmationModal/ConfirmationModal'
 import Bid from '../../utils/Bid'
+import useScreenSizes from '../../hooks/useScreenSizes'
 
 const activeRubber: IRubber = JSON.parse(localStorage.getItem('activeRubber') || '{}')
 interface IRubberContext {
@@ -30,6 +31,8 @@ const BridgeGame = () => {
   const [scoreIdHovering, setScoreIdHovering] = useState<null | number>(null)
   const [bidModalVisible, setBidModalVisible] = useState(false)
   const [confirmationModalVisible, setConfirmationModalVisible] = useState(false)
+
+  const { isMobile } = useScreenSizes()
 
   const addOrUpdateBid = (bid: IContractBid, bidId?: number) => {
     const updatedGame = bidId === undefined ? rubber.sumbitBid(bid) : rubber.editBid(bid, bidId)
@@ -76,14 +79,16 @@ const BridgeGame = () => {
           jumpTo={jumpToBid}
         />
       </div>
-      {!rubberGameState.isGameOver && (
-        <button className="add-bid" onClick={() => setBidModalVisible(true)}>
-          +
+      <div className={`${isMobile ? 'controls-container-sm' : 'controls-container'}`}>
+        <button className={`reset-game ${!isMobile ? 'padding-horizontal' : null}`} onClick={() => setConfirmationModalVisible(true)}>
+          {!isMobile && 'Reset'}<Reset color={'white'} />
         </button>
-      )}
-      <button className="reset-game" onClick={() => setConfirmationModalVisible(true)}>
-        <Reset color={'white'} />
-      </button>
+        {!rubberGameState.isGameOver && (
+          <button className={`add-bid ${!isMobile ? 'padding-horizontal' : null}`} onClick={() => setBidModalVisible(true)}>
+            {!isMobile && 'Add bid '}+
+          </button>
+        )}
+      </div>
       <div>{rubberGameState.isGameOver && 'Game over'}</div>
       <ConfirmationModal
         title="Reset game?"
