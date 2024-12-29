@@ -20,7 +20,7 @@ const BidModal: React.FC<BidModalProps> = ({
   setIsVisible,
   onSubmitBid,
 }) => {
-  const rubber = useContext(RubberContext)
+  const { rubber } = useContext(RubberContext)
   const defaultBid = bidId !== undefined ? rubber.getContractBidById(bidId) : undefined
 
   const handleCloseModal = () => {

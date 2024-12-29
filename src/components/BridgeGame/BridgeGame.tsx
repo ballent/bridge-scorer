@@ -10,9 +10,19 @@ import ConfirmationModal from '../ConfirmationModal/ConfirmationModal'
 import Bid from '../../utils/Bid'
 
 const activeRubber: IRubber = JSON.parse(localStorage.getItem('activeRubber') || '{}')
+interface IRubberContext {
+  rubber: Rubber
+  rubberHistory: Bid[]
+  jumpToBid: (bids: IContractBid[]) => void
+}
+
 const rubber = Object.keys(activeRubber).length ? new Rubber(activeRubber) : new Rubber()
 
-export const RubberContext = createContext<Rubber>(rubber)
+export const RubberContext = createContext<IRubberContext>({
+  rubber: rubber,
+  rubberHistory: [],
+  jumpToBid: (_bids: IContractBid[]) => { return } 
+})
 
 const BridgeGame = () => {
   const [rubberGameState, setRubberGameState] = useState<IRubberGameState>(rubber.getState())
@@ -49,7 +59,7 @@ const BridgeGame = () => {
   }
 
   return (
-    <RubberContext.Provider value={rubber}>
+    <RubberContext.Provider value={{rubber, rubberHistory, jumpToBid}}>
       <div className="game-container">
         <Scoresheet
           scoresBelow={rubberGameState.scoresBelow}

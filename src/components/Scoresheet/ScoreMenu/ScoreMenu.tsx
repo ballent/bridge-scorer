@@ -17,7 +17,6 @@ const ScoreMenu = ({
     <div key={'bid-menu' + bid.id} className="score-menu" onMouseLeave={() => setIsVisible(false)}>
       <button onClick={() => handleDeleteBid(bid.id)}>Delete bid</button>
       <button onClick={() => setIsEditModalVisible(true)}>Edit bid</button>
-      <span>{bid.scoreDescription}</span>
     </div>
   )
 }

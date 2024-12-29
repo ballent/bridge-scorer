@@ -43,5 +43,4 @@ export interface IContractBid {
 export interface IBidScore {
   id: number
   score: number
-  scoreDescription: string
 }

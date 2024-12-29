@@ -5,9 +5,6 @@ import Bid from '../../utils/Bid'
 import { useState } from 'react'
 import BidInfoModal from '../BidInfoModal/BidInfoModal'
 import ContractBid from '../ContractBid/ContractBid'
-import Trash from '../../assets/Trash'
-import Reset from '../../assets/Reset'
-import Info from '../../assets/Info'
 
 interface BidHistoryProps {
   bids: Bid[]
@@ -23,24 +20,12 @@ const BidHistory: React.FC<BidHistoryProps> = ({
   scoreIdHovering,
   setScoreIdHovering,
   onEditBid,
-  onDeleteBid,
-  jumpTo
+  onDeleteBid
 }) => {
   const [selectedBid, setSelectedBid] = useState<Bid | null>(null)
-  const [showMath, setShowMath] = useState(false)
 
   const handleDeselectBid = (isVisible: boolean) => {
     !isVisible && setSelectedBid(null)
-  }
-
-  const handleDeleteBid = (bidId: number) => {
-    onDeleteBid(bidId)
-    setSelectedBid(null)
-  }
-
-  const handleJumpTo = (bidId: number) => {
-    jumpTo(bids.map(bid => bid.contractBid).slice(0, bidId + 1))
-    setSelectedBid(null)
   }
 
   const Bid = ({ bid }: { bid: Bid }) => {
@@ -65,21 +50,6 @@ const BidHistory: React.FC<BidHistoryProps> = ({
     )
   }
 
-  const ModalTitle = () => {
-    return (
-      <>
-        {selectedBid && (
-          <div className='title-container'>
-            <ContractBid bid={selectedBid.contractBid} style={{fontWeight: '700'}} />
-            <button className='info' onClick={() => handleDeleteBid(selectedBid.id)}><Info color='grey' size={24} /></button>
-            <button className='trash' onClick={() => handleDeleteBid(selectedBid.id)}><Trash color='white' size={24} /></button>
-            <button className='reset' onClick={() => handleJumpTo(selectedBid.id)}><Reset color='white' size={24} /></button>
-          </div>
-        )}
-      </>
-    )
-  }
-
   return (
     <div className="bid-history-container">
       <span className="title">Bids</span>
@@ -93,12 +63,10 @@ const BidHistory: React.FC<BidHistoryProps> = ({
       {selectedBid && (
         <BidInfoModal
           bid={selectedBid}
-          title={<ModalTitle />}
           isVisible={selectedBid !== null}
-          showMath={showMath}
-          setShowMath={setShowMath}
           setIsVisible={handleDeselectBid}
           onEditBid={onEditBid}
+          onDeleteBid={onDeleteBid}
         />
       )}
     </div>

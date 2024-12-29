@@ -37,7 +37,7 @@ const Scoresheet: React.FC<ScoresheetProps> = ({
                 return (
                   <Score
                     key={'we-above-' + i}
-                    bid={bid}
+                    bidScore={bid}
                     showHighlight={scoreIdHovering === bid.id}
                     setScoreIdHovering={setScoreIdHovering}
                     onDeleteBid={onDeleteBid}
@@ -51,7 +51,7 @@ const Scoresheet: React.FC<ScoresheetProps> = ({
                 return (
                   <Score
                     key={'they-above-' + i}
-                    bid={bid}
+                    bidScore={bid}
                     showHighlight={scoreIdHovering === bid.id}
                     setScoreIdHovering={setScoreIdHovering}
                     onDeleteBid={onDeleteBid}
@@ -72,7 +72,7 @@ const Scoresheet: React.FC<ScoresheetProps> = ({
                       return (
                         <Score
                           key={'we-' + i + j}
-                          bid={bid}
+                          bidScore={bid}
                           showHighlight={scoreIdHovering === bid.id}
                           setScoreIdHovering={setScoreIdHovering}
                           onDeleteBid={onDeleteBid}
@@ -86,7 +86,7 @@ const Scoresheet: React.FC<ScoresheetProps> = ({
                       return (
                         <Score
                           key={'they-' + i + j}
-                          bid={bid}
+                          bidScore={bid}
                           showHighlight={scoreIdHovering === bid.id}
                           setScoreIdHovering={setScoreIdHovering}
                           onDeleteBid={onDeleteBid}
