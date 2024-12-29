@@ -38,12 +38,17 @@ const BidHistory: React.FC<BidHistoryProps> = ({
       setScoreIdHovering(null)
     }
 
+    const handleClick = () => {
+      setSelectedBid(bid)
+      setScoreIdHovering(null)
+    }
+
     return (
       <button
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
         className={`bid-button ${scoreIdHovering === bid.id ? 'highlight-bid' : null}`}
-        onClick={() => setSelectedBid(bid)}
+        onClick={handleClick}
       >
         <ContractBid bid={contractBid} /> 
       </button>

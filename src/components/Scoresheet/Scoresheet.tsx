@@ -1,6 +1,6 @@
 import { Fragment } from 'react/jsx-runtime'
 import './Scoresheet.css'
-import { IBidScore, IContractBid } from '../../utils/Rubber/Rubber.types'
+import { IBidScore } from '../../utils/Rubber/Rubber.types'
 import Score from './Score/Score'
 
 interface ScoresheetProps {
@@ -8,17 +8,13 @@ interface ScoresheetProps {
   scoresBelow: { teamWe: IBidScore[][]; teamThey: IBidScore[][] }
   scoreIdHovering: number | null
   setScoreIdHovering: (id: number | null) => void
-  onDeleteBid: (id: number) => void
-  onEditBid: (bid: IContractBid, bidId?: number) => void
 }
 
 const Scoresheet: React.FC<ScoresheetProps> = ({
   scoresAbove,
   scoresBelow,
   scoreIdHovering,
-  setScoreIdHovering,
-  onDeleteBid,
-  onEditBid
+  setScoreIdHovering
 }) => {
   return (
     <div className='scoresheet-container'>
@@ -40,8 +36,6 @@ const Scoresheet: React.FC<ScoresheetProps> = ({
                     bidScore={bid}
                     showHighlight={scoreIdHovering === bid.id}
                     setScoreIdHovering={setScoreIdHovering}
-                    onDeleteBid={onDeleteBid}
-                    onEditBid={onEditBid}
                   />
                 )
               })}
@@ -54,8 +48,6 @@ const Scoresheet: React.FC<ScoresheetProps> = ({
                     bidScore={bid}
                     showHighlight={scoreIdHovering === bid.id}
                     setScoreIdHovering={setScoreIdHovering}
-                    onDeleteBid={onDeleteBid}
-                    onEditBid={onEditBid}
                   />
                 )
               })}
@@ -67,7 +59,7 @@ const Scoresheet: React.FC<ScoresheetProps> = ({
               <Fragment key={i}>
                 <tr className="break"></tr>
                 <tr>
-                  <td>
+                  <td className='score-below'>
                     {scoresBelow.teamWe[i].map((bid, j) => {
                       return (
                         <Score
@@ -75,13 +67,11 @@ const Scoresheet: React.FC<ScoresheetProps> = ({
                           bidScore={bid}
                           showHighlight={scoreIdHovering === bid.id}
                           setScoreIdHovering={setScoreIdHovering}
-                          onDeleteBid={onDeleteBid}
-                          onEditBid={onEditBid}
                         />
                       )
                     })}
                   </td>
-                  <td>
+                  <td className='score-below'>
                     {scoresBelow.teamThey[i].map((bid, j) => {
                       return (
                         <Score
@@ -89,8 +79,6 @@ const Scoresheet: React.FC<ScoresheetProps> = ({
                           bidScore={bid}
                           showHighlight={scoreIdHovering === bid.id}
                           setScoreIdHovering={setScoreIdHovering}
-                          onDeleteBid={onDeleteBid}
-                          onEditBid={onEditBid}
                         />
                       )
                     })}

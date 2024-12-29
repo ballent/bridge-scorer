@@ -66,8 +66,6 @@ const BridgeGame = () => {
           scoresAbove={rubberGameState.scoresAbove}
           scoreIdHovering={scoreIdHovering}
           setScoreIdHovering={setScoreIdHovering}
-          onDeleteBid={handleDeleteBid}
-          onEditBid={addOrUpdateBid}
         />
         <BidHistory
           bids={rubberHistory}

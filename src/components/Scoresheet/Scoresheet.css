@@ -31,3 +31,7 @@ table tr th:last-child {
 .score-above {
   vertical-align: bottom;
 }
+
+.score-below {
+  vertical-align: top;
+}

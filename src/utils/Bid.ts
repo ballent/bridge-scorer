@@ -41,6 +41,9 @@ class Bid {
     const isBidDoubledOrRedoubled = contractBid.doubledMultiplier > 1
     const vulnerableMultiplier = isBiddingTeamVulnerable ? 2 : 1
     const pointsPerTrick = this.getPointsPerTrick(contractBid.suit, bidMultiplier)
+    const maxTricksForBid = Math.abs(contractBid.contractTricks - 7)
+    const tricksTowardsScore = contractBid.tricksMade > maxTricksForBid ? maxTricksForBid : contractBid.tricksMade
+    contractBid.tricksMade = tricksTowardsScore
 
     this.id = id
     this.contractBid = contractBid
@@ -104,7 +107,7 @@ class Bid {
       const slamVulnerableMultiplier = this.isBiddingTeamVulnerable ? 1.5 : 1
       const slamBonus = this.isSmallSlamBid ? SS_BONUS_BASE_VALUE : GS_BONUS_BASE_VALUE
       const totalSlamBonus = slamBonus * slamVulnerableMultiplier
-      this.biddingTeamScoreDescription.scoreAbove += `${slamBonus} (${
+      this.biddingTeamScoreDescription.scoreAbove += `${totalSlamBonus} (${
         !this.isBiddingTeamVulnerable ? 'non-' : ''
       }vulnerable slam bonus)\n`
       biddingScoresAbove.push({ ...bidScore, score: totalSlamBonus })
