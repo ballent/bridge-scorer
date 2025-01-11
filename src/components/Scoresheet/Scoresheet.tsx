@@ -26,7 +26,7 @@ const Scoresheet: React.FC<ScoresheetProps> = ({
           </tr>
         </thead>
         <tbody>
-          <tr className="break"></tr>
+          <tr><td className='break' colSpan={2}></td></tr>
           <tr>
             <td className='score-above'>
               {[...scoresAbove.teamWe].reverse().map((bid, i) => {
@@ -53,11 +53,10 @@ const Scoresheet: React.FC<ScoresheetProps> = ({
               })}
             </td>
           </tr>
-          <tr className="break"></tr>
           {scoresBelow.teamWe.map((_game, i) => {
             return (
               <Fragment key={i}>
-                <tr className="break"></tr>
+                <tr><td className='break' colSpan={2}></td></tr>
                 <tr>
                   <td className='score-below'>
                     {scoresBelow.teamWe[i].map((bid, j) => {
