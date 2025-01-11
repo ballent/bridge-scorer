@@ -26,7 +26,7 @@ const TricksMadeInput: FC<TricksMadeInputProps> = ({min, max, value, name, handl
   };
 
   return (
-    <div className='container'>
+    <div className='tricks-made-container'>
       <input className='tricks-made-range' type="range" id={name} name={name} min={min} max={max} onChange={handleChange} value={value} style={{ background: getBackground()}} />
       <span className='selection'><ContractResult value={value} /></span>
       <div className='col'>

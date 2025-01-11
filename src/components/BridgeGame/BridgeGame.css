@@ -1,9 +1,16 @@
+.container {
+  display: flex;
+  flex: 1;
+  justify-content: flex-start;
+  align-items: center;
+  flex-direction: column;
+}
+
 .game-container {
   display: flex;
   align-items: flex-start;
   flex-direction: row;
   width: 335px;
-  min-height: 300px;
   padding: 15px 0px;
 }
 
@@ -25,7 +32,7 @@
   padding: 25px 5%;
 }
 
-.reset-game {
+.control {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -41,16 +48,9 @@
   gap: 5px;
 }
 
-.add-bid {
-  min-width: 50px;
-  min-height: 50px;
-  color: white;
-  background-color: green;
-  border-radius: 50px;
-  border: none;
-  text-decoration: none;
-  cursor: pointer;
-  font-size: 20px;
+.control svg {
+  min-width: 32px;
+  min-height: 32px;
 }
 
 .padding-horizontal {

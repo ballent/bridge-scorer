@@ -19,7 +19,10 @@ table tr th:last-child {
 }
 
 .break {
-  border: 1px solid black;
+  height: 1px;
+  background-color: black;
+  padding: 0;
+  margin: 0;
 }
 
 .scoresheet-container {

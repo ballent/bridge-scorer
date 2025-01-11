@@ -9,6 +9,7 @@ import Reset from '../../assets/Reset'
 import ConfirmationModal from '../ConfirmationModal/ConfirmationModal'
 import Bid from '../../utils/Bid'
 import useScreenSizes from '../../hooks/useScreenSizes'
+import Plus from '../../assets/Plus'
 
 const activeRubber: IRubber = JSON.parse(localStorage.getItem('activeRubber') || '{}')
 interface IRubberContext {
@@ -22,7 +23,9 @@ const rubber = Object.keys(activeRubber).length ? new Rubber(activeRubber) : new
 export const RubberContext = createContext<IRubberContext>({
   rubber: rubber,
   rubberHistory: [],
-  jumpToBid: (_bids: IContractBid[]) => { return } 
+  jumpToBid: (_bids: IContractBid[]) => {
+    return
+  }
 })
 
 const BridgeGame = () => {
@@ -46,7 +49,7 @@ const BridgeGame = () => {
   const handleDeleteBid = (bidId: number) => {
     const updatedGameState = rubber.deleteBid(bidId).getState()
     setRubberGameState(updatedGameState)
-    setRubberHistory(updatedGameState.bidHistory) 
+    setRubberHistory(updatedGameState.bidHistory)
   }
 
   const resetRubber = () => {
@@ -62,46 +65,58 @@ const BridgeGame = () => {
   }
 
   return (
-    <RubberContext.Provider value={{rubber, rubberHistory, jumpToBid}}>
-      <div className="game-container">
-        <Scoresheet
-          scoresBelow={rubberGameState.scoresBelow}
-          scoresAbove={rubberGameState.scoresAbove}
-          scoreIdHovering={scoreIdHovering}
-          setScoreIdHovering={setScoreIdHovering}
-        />
-        <BidHistory
-          bids={rubberHistory}
-          scoreIdHovering={scoreIdHovering}
-          setScoreIdHovering={setScoreIdHovering}
-          onEditBid={addOrUpdateBid}
-          onDeleteBid={handleDeleteBid}
-          jumpTo={jumpToBid}
-        />
-      </div>
-      <div className={`${isMobile ? 'controls-container-sm' : 'controls-container'}`}>
-        <button className={`reset-game ${!isMobile ? 'padding-horizontal' : null}`} onClick={() => setConfirmationModalVisible(true)}>
-          {!isMobile && 'Reset'}<Reset color={'white'} />
-        </button>
-        {!rubberGameState.isGameOver && (
-          <button className={`add-bid ${!isMobile ? 'padding-horizontal' : null}`} onClick={() => setBidModalVisible(true)}>
-            {!isMobile && 'Add bid '}+
+    <RubberContext.Provider value={{ rubber, rubberHistory, jumpToBid }}>
+      <div className='container' style={{ height: window.innerHeight }}>
+        <div className="game-container">
+          <Scoresheet
+            scoresBelow={rubberGameState.scoresBelow}
+            scoresAbove={rubberGameState.scoresAbove}
+            scoreIdHovering={scoreIdHovering}
+            setScoreIdHovering={setScoreIdHovering}
+          />
+          <BidHistory
+            bids={rubberHistory}
+            scoreIdHovering={scoreIdHovering}
+            setScoreIdHovering={setScoreIdHovering}
+            onEditBid={addOrUpdateBid}
+            onDeleteBid={handleDeleteBid}
+            jumpTo={jumpToBid}
+          />
+        </div>
+        <div className={`${isMobile ? 'controls-container-sm' : 'controls-container'}`}>
+          <button
+            className={`control ${!isMobile ? 'padding-horizontal' : null}`}
+            style={isMobile ? { position: 'fixed', bottom: 25, left: 25, width: 50 } : {}}
+            onClick={() => setConfirmationModalVisible(true)}
+          >
+            {!isMobile && 'Reset'}
+            <Reset color={'white'} />
           </button>
-        )}
+          {!rubberGameState.isGameOver && (
+            <button
+              className={`control ${!isMobile ? 'padding-horizontal' : null}`}
+              style={isMobile ? { position: 'fixed', bottom: 25, right: 25, width: 50 } : {}}
+              onClick={() => setBidModalVisible(true)}
+            >
+              {!isMobile && 'Add bid '}
+              <Plus color={'white'} />
+            </button>
+          )}
+        </div>
+        <div>{rubberGameState.isGameOver && 'Game over'}</div>
+        <ConfirmationModal
+          title="Reset game?"
+          isVisible={confirmationModalVisible}
+          setIsVisible={setConfirmationModalVisible}
+          onConfirm={resetRubber}
+        />
+        <BidModal
+          title="Create bid"
+          isVisible={bidModalVisible}
+          setIsVisible={setBidModalVisible}
+          onSubmitBid={addOrUpdateBid}
+        />
       </div>
-      <div>{rubberGameState.isGameOver && 'Game over'}</div>
-      <ConfirmationModal
-        title="Reset game?"
-        isVisible={confirmationModalVisible}
-        setIsVisible={setConfirmationModalVisible}
-        onConfirm={resetRubber}
-      />
-      <BidModal
-        title="Create bid"
-        isVisible={bidModalVisible}
-        setIsVisible={setBidModalVisible}
-        onSubmitBid={addOrUpdateBid}
-      />
     </RubberContext.Provider>
   )
 }
