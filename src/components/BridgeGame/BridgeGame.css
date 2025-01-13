@@ -6,53 +6,18 @@
   flex-direction: column;
 }
 
+.container-sm {
+  display: flex;
+  flex: 1;
+  justify-content: flex-start;
+  align-items: center;
+  flex-direction: column;
+}
+
 .game-container {
   display: flex;
   align-items: flex-start;
   flex-direction: row;
-  width: 335px;
   padding: 15px 0px;
-}
-
-.controls-container {
-  display: flex;
-  width: 600px;
-  flex: 1;
-  justify-content: space-between;
-  align-items: flex-start;
-  padding: 25px;
-}
-
-.controls-container-sm {
-  display: flex;
-  flex: 1;
-  width: 90%;
-  justify-content: space-between;
-  align-items: flex-end;
-  padding: 25px 5%;
-}
-
-.control {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-width: 50px;
-  min-height: 50px;
-  color: white;
-  background-color: green;
-  border-radius: 50px;
-  border: none;
-  text-decoration: none;
-  cursor: pointer;
-  font-size: 20px;
-  gap: 5px;
-}
-
-.control svg {
-  min-width: 32px;
-  min-height: 32px;
-}
-
-.padding-horizontal {
-  padding: 0px 15px;
+  width: 335px
 }
