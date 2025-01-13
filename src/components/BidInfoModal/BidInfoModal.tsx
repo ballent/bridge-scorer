@@ -24,7 +24,7 @@ const BidInfoModal: React.FC<BidModalProps> = ({
   isVisible,
   setIsVisible,
   onDeleteBid,
-  onEditBid,
+  onEditBid
 }) => {
   const contractBid = bid.contractBid
   const { rubberHistory, jumpToBid } = useContext(RubberContext)
@@ -45,7 +45,7 @@ const BidInfoModal: React.FC<BidModalProps> = ({
   }
 
   const handleJumpTo = (bidId: number) => {
-    jumpToBid(rubberHistory.map(bid => bid.contractBid).slice(0, bidId + 1))
+    jumpToBid(rubberHistory.map((bid) => bid.contractBid).slice(0, bidId + 1))
     setIsVisible(false)
   }
 
@@ -80,12 +80,31 @@ const BidInfoModal: React.FC<BidModalProps> = ({
                 </button>
               </div>
               {showMath && (
-                <div className='math-container'>
+                <div className="math-container">
                   <span className="input-title">Score</span>
-                  <div className='math-content'>
-                    {scoreDescriptionBelow && <>Score below: <span className='score-entry'>{bid.biddingTeamScoreDescription.scoreBelow}</span></>}
-                    {scoreDescriptionAbove && <>Score above bidding team: <span className='score-entry'>{bid.biddingTeamScoreDescription.scoreAbove}</span></>}
-                    {nonBiddingTeamScoreDescription && <>Score above non bidding team: <span className='score-entry'>{bid.nonBiddingTeamScoreDescription}</span></>}
+                  <div className="math-content">
+                    {scoreDescriptionBelow && (
+                      <>
+                        Score below:{' '}
+                        <span className="score-entry">
+                          {bid.biddingTeamScoreDescription.scoreBelow}
+                        </span>
+                      </>
+                    )}
+                    {scoreDescriptionAbove && (
+                      <>
+                        Score above bidding team:{' '}
+                        <span className="score-entry">
+                          {bid.biddingTeamScoreDescription.scoreAbove}
+                        </span>
+                      </>
+                    )}
+                    {nonBiddingTeamScoreDescription && (
+                      <>
+                        Score above non bidding team:{' '}
+                        <span className="score-entry">{bid.nonBiddingTeamScoreDescription}</span>
+                      </>
+                    )}
                   </div>
                 </div>
               )}

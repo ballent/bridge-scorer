@@ -14,8 +14,10 @@ interface SelectOption {
   style?: CSSProperties
 }
 
-const ListSelect = ({name, options, value, handleChange}: ListSelectProps) => {
-  const [selected, setSelected] = useState<null | number>(options.map(element => element.value).indexOf(value))
+const ListSelect = ({ name, options, value, handleChange }: ListSelectProps) => {
+  const [selected, setSelected] = useState<null | number>(
+    options.map((element) => element.value).indexOf(value)
+  )
 
   const handleSelection = (e: ChangeEvent<HTMLInputElement>, idx: number) => {
     setSelected(idx)
@@ -23,22 +25,27 @@ const ListSelect = ({name, options, value, handleChange}: ListSelectProps) => {
   }
 
   return (
-    <div className='select-container'>
+    <div className="select-container">
       {options.map((element, idx) => {
         return (
           <Fragment key={`list-select-${idx}`}>
-            <label htmlFor={name + element.label} className={`select-option ${selected === idx ? 'selected' : null}`} style={element.style}>
+            <label
+              htmlFor={name + element.label}
+              className={`select-option ${selected === idx ? 'selected' : null}`}
+              style={element.style}
+            >
               <input
                 className={`select`}
                 type="radio"
                 id={name + element.label}
                 name={name}
                 value={element.value}
-                onChange={e => handleSelection(e, idx)}
+                onChange={(e) => handleSelection(e, idx)}
                 // checked={}
-              />{element.label}
+              />
+              {element.label}
             </label>
-            {idx !== options.length - 1 && <div className='spacer'/>}
+            {idx !== options.length - 1 && <div className="spacer" />}
           </Fragment>
         )
       })}

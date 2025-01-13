@@ -17,7 +17,7 @@ const Scoresheet: React.FC<ScoresheetProps> = ({
   setScoreIdHovering
 }) => {
   return (
-    <div className='scoresheet-container'>
+    <div className="scoresheet-container">
       <table>
         <thead>
           <tr>
@@ -26,9 +26,11 @@ const Scoresheet: React.FC<ScoresheetProps> = ({
           </tr>
         </thead>
         <tbody>
-          <tr><td className='break' colSpan={2}></td></tr>
           <tr>
-            <td className='score-above'>
+            <td className="break" colSpan={2}></td>
+          </tr>
+          <tr>
+            <td className="score-above">
               {[...scoresAbove.teamWe].reverse().map((bid, i) => {
                 return (
                   <Score
@@ -40,7 +42,7 @@ const Scoresheet: React.FC<ScoresheetProps> = ({
                 )
               })}
             </td>
-            <td className='score-above'>
+            <td className="score-above">
               {[...scoresAbove.teamThey].reverse().map((bid, i) => {
                 return (
                   <Score
@@ -56,9 +58,11 @@ const Scoresheet: React.FC<ScoresheetProps> = ({
           {scoresBelow.teamWe.map((_game, i) => {
             return (
               <Fragment key={i}>
-                <tr><td className='break' colSpan={2}></td></tr>
                 <tr>
-                  <td className='score-below'>
+                  <td className="break" colSpan={2}></td>
+                </tr>
+                <tr>
+                  <td className="score-below">
                     {scoresBelow.teamWe[i].map((bid, j) => {
                       return (
                         <Score
@@ -70,7 +74,7 @@ const Scoresheet: React.FC<ScoresheetProps> = ({
                       )
                     })}
                   </td>
-                  <td className='score-below'>
+                  <td className="score-below">
                     {scoresBelow.teamThey[i].map((bid, j) => {
                       return (
                         <Score

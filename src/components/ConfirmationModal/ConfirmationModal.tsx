@@ -9,8 +9,12 @@ interface ConfirmationModalProps {
   onConfirm: () => void
 }
 
-const ConfirmationModal = ({title, isVisible, setIsVisible, onConfirm}: ConfirmationModalProps) => {
-
+const ConfirmationModal = ({
+  title,
+  isVisible,
+  setIsVisible,
+  onConfirm
+}: ConfirmationModalProps) => {
   const handleCloseModal = () => {
     setIsVisible(false)
   }
@@ -20,22 +24,31 @@ const ConfirmationModal = ({title, isVisible, setIsVisible, onConfirm}: Confirma
     onConfirm()
   }
 
-  return (<>
-    {isVisible && createPortal(
-      <>
-      <div onClick={handleCloseModal} className='backdrop' />
-      <div className="modal-content">
-        <div className='header'>
-          {title}
-          <button className='close' onClick={handleCloseModal}><img src={Close} alt='Close' /></button>
-        </div>
-        <div className='button-container'>
-          <button className='cancel-button' onClick={handleCloseModal}>Cancel</button>
-          <button className='confirm-button' onClick={handleConfirm}>Confirm</button>
-        </div>
-      </div>
-    </>, 
-      document.body)}
+  return (
+    <>
+      {isVisible &&
+        createPortal(
+          <>
+            <div onClick={handleCloseModal} className="backdrop" />
+            <div className="modal-content">
+              <div className="header">
+                {title}
+                <button className="close" onClick={handleCloseModal}>
+                  <img src={Close} alt="Close" />
+                </button>
+              </div>
+              <div className="button-container">
+                <button className="cancel-button" onClick={handleCloseModal}>
+                  Cancel
+                </button>
+                <button className="confirm-button" onClick={handleConfirm}>
+                  Confirm
+                </button>
+              </div>
+            </div>
+          </>,
+          document.body
+        )}
     </>
   )
 }

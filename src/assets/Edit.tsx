@@ -1,6 +1,6 @@
 import { IIconProps } from './IIconProps'
 
-const Edit = ({color = 'black', size = 32}: IIconProps) => {
+const Edit = ({ color = 'black', size = 32 }: IIconProps) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"

@@ -1,6 +1,6 @@
-import Plus from "../../assets/Plus"
-import Reset from "../../assets/Reset"
-import useScreenSizes from "../../hooks/useScreenSizes"
+import Plus from '../../assets/Plus'
+import Reset from '../../assets/Reset'
+import useScreenSizes from '../../hooks/useScreenSizes'
 import './Controls.css'
 
 interface ControlsProps {
@@ -9,11 +9,18 @@ interface ControlsProps {
   setBidModalVisible: (visible: boolean) => void
 }
 
-const Controls = ({isGameOver, setConfirmationModalVisible, setBidModalVisible}: ControlsProps) => {
-  const { isMobile } = useScreenSizes() 
+const Controls = ({
+  isGameOver,
+  setConfirmationModalVisible,
+  setBidModalVisible
+}: ControlsProps) => {
+  const { isMobile } = useScreenSizes()
 
   return (
-    <div className={`controls-container ${isMobile ? null : 'padding-vertical'}`} style={isMobile ? {width: '90%'} : {width: '400px'}}>
+    <div
+      className={`controls-container ${isMobile ? null : 'padding-vertical'}`}
+      style={isMobile ? { width: '90%' } : { width: '400px' }}
+    >
       <button
         className={`control ${!isMobile ? 'button-padding' : null}`}
         style={isMobile ? { position: 'fixed', bottom: 25, left: 25, width: 50 } : {}}

@@ -42,7 +42,8 @@ class Bid {
     const vulnerableMultiplier = isBiddingTeamVulnerable ? 2 : 1
     const pointsPerTrick = this.getPointsPerTrick(contractBid.suit, bidMultiplier)
     const maxTricksForBid = Math.abs(contractBid.contractTricks - 7)
-    const tricksTowardsScore = contractBid.tricksMade > maxTricksForBid ? maxTricksForBid : contractBid.tricksMade
+    const tricksTowardsScore =
+      contractBid.tricksMade > maxTricksForBid ? maxTricksForBid : contractBid.tricksMade
     contractBid.tricksMade = tricksTowardsScore
 
     this.id = id
@@ -173,7 +174,7 @@ class Bid {
     for (let i = 0; i < underTricks; i++) {
       const lookupIndex = i > lookupList.length - 1 ? lookupList.length - 1 : i
       doubledPenaltyPoints += lookupList[lookupIndex]
-      description += `${lookupList[lookupIndex]} ${i+1 < underTricks ? '+ ' : ''}`
+      description += `${lookupList[lookupIndex]} ${i + 1 < underTricks ? '+ ' : ''}`
     }
     nonBiddingTeamScoresAbove.push({ ...bidScore, score: doubledPenaltyPoints })
     this.nonBiddingTeamScoreDescription += `${description}(doubled ${!this.isBiddingTeamVulnerable ? 'non-' : ''}vulerable undertricks)\n`

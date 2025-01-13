@@ -65,15 +65,18 @@ const BridgeGame = () => {
 
   return (
     <RubberContext.Provider value={{ rubber, rubberHistory, jumpToBid }}>
-      <div className={isMobile ? 'container-sm' : 'container'} style={{ height: window.innerHeight }}>
-          {!isMobile &&
-            <Controls
-              isGameOver={rubberGameState.isGameOver}
-              setConfirmationModalVisible={setConfirmationModalVisible}
-              setBidModalVisible={setBidModalVisible}
-            />
-          }
-        <div className='game-container'>
+      <div
+        className={isMobile ? 'container-sm' : 'container'}
+        style={{ height: window.innerHeight }}
+      >
+        {!isMobile && (
+          <Controls
+            isGameOver={rubberGameState.isGameOver}
+            setConfirmationModalVisible={setConfirmationModalVisible}
+            setBidModalVisible={setBidModalVisible}
+          />
+        )}
+        <div className="game-container">
           <Scoresheet
             scoresBelow={rubberGameState.scoresBelow}
             scoresAbove={rubberGameState.scoresAbove}

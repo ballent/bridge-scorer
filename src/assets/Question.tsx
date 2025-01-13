@@ -1,4 +1,4 @@
-const Question = ({color = 'black', size = 32}) => {
+const Question = ({ color = 'black', size = 32 }) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
