@@ -1,6 +1,6 @@
-import { IIconProps } from "./IIconProps"
+import { IIconProps } from './IIconProps'
 
-const Plus = ({color = 'black', size = 32}: IIconProps) => {
+const Plus = ({ color = 'black', size = 32 }: IIconProps) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"

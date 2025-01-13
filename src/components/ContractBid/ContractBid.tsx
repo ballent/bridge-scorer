@@ -11,7 +11,7 @@ interface ContractBidProps {
 
 const ContractBid = ({ bid, style }: ContractBidProps) => {
   return (
-    <span className='contract-bid' style={style}>
+    <span className="contract-bid" style={style}>
       <span className="team">{bid.team}</span> {bid.contractTricks}
       {bid.suit} <ContractResult value={bid.tricksMade} size={24} />
       {displayDoubledMultiplier(bid.doubledMultiplier)}

@@ -1,9 +1,6 @@
 import Bid from '../Bid'
 import RubberTeam from '../Team'
-import {
-  FAST_RUBBER_BONUS,
-  SLOW_RUBBER_BONUS,
-} from './constants'
+import { FAST_RUBBER_BONUS, SLOW_RUBBER_BONUS } from './constants'
 import { IBidScore, IContractBid, IRubber, TEAM } from './Rubber.types'
 
 class Rubber {
@@ -65,7 +62,8 @@ class Rubber {
   calculateBidPoints(bidContext: Bid) {
     const contractBid = bidContext.contractBid
     // add any score below
-    bidContext.scoreBelow.score > 0 && bidContext.biddingTeam.scoreBelow[this.gameIndex].push(bidContext.scoreBelow)
+    bidContext.scoreBelow.score > 0 &&
+      bidContext.biddingTeam.scoreBelow[this.gameIndex].push(bidContext.scoreBelow)
 
     // add any scores above and honors points
     bidContext.biddingTeam.scoreAbove.push(...bidContext.biddingTeamScoreAbove)
@@ -87,13 +85,13 @@ class Rubber {
       this.vulnerableTeams.includes(TEAM.WE) && this.vulnerableTeams.includes(TEAM.THEY)
 
     const rubberBonus = slowRubber ? SLOW_RUBBER_BONUS : FAST_RUBBER_BONUS
-    biddingTeam.scoreAbove.push({id: bidId, score: rubberBonus})
-    this.teamWe.scoreBelow[this.gameIndex].push({id: -1, score: this.teamWe.getTotalScore()})
-    this.teamThey.scoreBelow[this.gameIndex].push({id: -1, score: this.teamThey.getTotalScore()})
+    biddingTeam.scoreAbove.push({ id: bidId, score: rubberBonus })
+    this.teamWe.scoreBelow[this.gameIndex].push({ id: -1, score: this.teamWe.getTotalScore() })
+    this.teamThey.scoreBelow[this.gameIndex].push({ id: -1, score: this.teamThey.getTotalScore() })
   }
 
   isGameWin(bids: IBidScore[]) {
-    return bids.map(bid => bid.score).reduce((sum, num) => sum + num, 0) >= 100
+    return bids.map((bid) => bid.score).reduce((sum, num) => sum + num, 0) >= 100
   }
 
   jumpToGameState(bids: IContractBid[]) {

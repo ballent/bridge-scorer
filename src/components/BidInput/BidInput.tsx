@@ -33,8 +33,8 @@ const contractTrickOptions = [
 
 const suitOptions = [
   { label: '♣', value: SUIT.CLUBS },
-  { label: '♦', value: SUIT.DIAMONDS, style: {color: 'red'} },
-  { label: '♥', value: SUIT.HEARTS, style: {color: 'red'} },
+  { label: '♦', value: SUIT.DIAMONDS, style: { color: 'red' } },
+  { label: '♥', value: SUIT.HEARTS, style: { color: 'red' } },
   { label: '♠', value: SUIT.SPADES },
   { label: 'NT', value: SUIT.NO_TRUMP }
 ]
@@ -66,7 +66,9 @@ const BidInput: React.FC<BidInputProps> = ({
   onSubmit
 }) => {
   const [bidData, setBidData] = useState<IContractBid>(defaultBid)
-  const [honorsVisible, setHonorsVisible] = useState(Boolean(defaultBid.honorsWe || defaultBid.honorsThey))
+  const [honorsVisible, setHonorsVisible] = useState(
+    Boolean(defaultBid.honorsWe || defaultBid.honorsThey)
+  )
 
   const handleChange = (e: ChangeEvent<HTMLInputElement> | 'increment' | 'decrement') => {
     switch (e) {
@@ -149,8 +151,8 @@ const BidInput: React.FC<BidInputProps> = ({
           </button>
           {honorsVisible && (
             <div className="bid-input-content">
-              <div className='honors'>
-                <span className='honors-title'>We:</span>
+              <div className="honors">
+                <span className="honors-title">We:</span>
                 <ListSelect
                   name={'honorsWe'}
                   options={honorsOptions}
@@ -158,8 +160,8 @@ const BidInput: React.FC<BidInputProps> = ({
                   handleChange={handleChange}
                 />
               </div>
-              <div className='honors'>
-                <span className='honors-title'>They:</span>
+              <div className="honors">
+                <span className="honors-title">They:</span>
                 <ListSelect
                   name={'honorsThey'}
                   options={honorsOptions}

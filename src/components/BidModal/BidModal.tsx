@@ -18,7 +18,7 @@ const BidModal: React.FC<BidModalProps> = ({
   bidId,
   isVisible,
   setIsVisible,
-  onSubmitBid,
+  onSubmitBid
 }) => {
   const { rubber } = useContext(RubberContext)
   const defaultBid = bidId !== undefined ? rubber.getContractBidById(bidId) : undefined
@@ -37,13 +37,19 @@ const BidModal: React.FC<BidModalProps> = ({
       {isVisible &&
         createPortal(
           <>
-            <div onClick={handleCloseModal} className='backdrop' />
+            <div onClick={handleCloseModal} className="backdrop" />
             <div className="modal-content">
-              <div className='header'>
+              <div className="header">
                 {title}
-                <button className='close' onClick={handleCloseModal}><img src={Close} alt='Close' /></button>
+                <button className="close" onClick={handleCloseModal}>
+                  <img src={Close} alt="Close" />
+                </button>
               </div>
-              <BidInput defaultBid={defaultBid} submitText={bidId !== undefined ? 'Save' : undefined} onSubmit={handleSubmitBid} />
+              <BidInput
+                defaultBid={defaultBid}
+                submitText={bidId !== undefined ? 'Save' : undefined}
+                onSubmit={handleSubmitBid}
+              />
             </div>
           </>,
           document.body

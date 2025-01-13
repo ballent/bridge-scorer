@@ -12,7 +12,7 @@ interface ContractResultProps {
 
 const ContractResult = ({ value, size, style }: ContractResultProps) => {
   return (
-    <div className='contract-result' style={style}>
+    <div className="contract-result" style={style}>
       {value === 0 ? (
         <Check color="green" size={size} />
       ) : value > 0 ? (

@@ -50,7 +50,7 @@ const BidHistory: React.FC<BidHistoryProps> = ({
         className={`bid-button ${scoreIdHovering === bid.id ? 'highlight-bid' : null}`}
         onClick={handleClick}
       >
-        <ContractBid bid={contractBid} /> 
+        <ContractBid bid={contractBid} />
       </button>
     )
   }
