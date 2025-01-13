@@ -5,11 +5,10 @@ import { IContractBid, IRubber, IRubberGameState } from '../../utils/Rubber/Rubb
 import BidHistory from '../BidHistory/BidHistory'
 import BidModal from '../BidModal/BidModal'
 import './BridgeGame.css'
-import Reset from '../../assets/Reset'
 import ConfirmationModal from '../ConfirmationModal/ConfirmationModal'
 import Bid from '../../utils/Bid'
+import Controls from '../Controls/Controls'
 import useScreenSizes from '../../hooks/useScreenSizes'
-import Plus from '../../assets/Plus'
 
 const activeRubber: IRubber = JSON.parse(localStorage.getItem('activeRubber') || '{}')
 interface IRubberContext {
@@ -66,8 +65,15 @@ const BridgeGame = () => {
 
   return (
     <RubberContext.Provider value={{ rubber, rubberHistory, jumpToBid }}>
-      <div className='container' style={{ height: window.innerHeight }}>
-        <div className="game-container">
+      <div className={isMobile ? 'container-sm' : 'container'} style={{ height: window.innerHeight }}>
+          {!isMobile &&
+            <Controls
+              isGameOver={rubberGameState.isGameOver}
+              setConfirmationModalVisible={setConfirmationModalVisible}
+              setBidModalVisible={setBidModalVisible}
+            />
+          }
+        <div className='game-container'>
           <Scoresheet
             scoresBelow={rubberGameState.scoresBelow}
             scoresAbove={rubberGameState.scoresAbove}
@@ -83,26 +89,13 @@ const BridgeGame = () => {
             jumpTo={jumpToBid}
           />
         </div>
-        <div className={`${isMobile ? 'controls-container-sm' : 'controls-container'}`}>
-          <button
-            className={`control ${!isMobile ? 'padding-horizontal' : null}`}
-            style={isMobile ? { position: 'fixed', bottom: 25, left: 25, width: 50 } : {}}
-            onClick={() => setConfirmationModalVisible(true)}
-          >
-            {!isMobile && 'Reset'}
-            <Reset color={'white'} />
-          </button>
-          {!rubberGameState.isGameOver && (
-            <button
-              className={`control ${!isMobile ? 'padding-horizontal' : null}`}
-              style={isMobile ? { position: 'fixed', bottom: 25, right: 25, width: 50 } : {}}
-              onClick={() => setBidModalVisible(true)}
-            >
-              {!isMobile && 'Add bid '}
-              <Plus color={'white'} />
-            </button>
-          )}
-        </div>
+        {isMobile && (
+          <Controls
+            isGameOver={rubberGameState.isGameOver}
+            setConfirmationModalVisible={setConfirmationModalVisible}
+            setBidModalVisible={setBidModalVisible}
+          />
+        )}
         <div>{rubberGameState.isGameOver && 'Game over'}</div>
         <ConfirmationModal
           title="Reset game?"

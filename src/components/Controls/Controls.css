@@ -1,0 +1,35 @@
+.controls-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.control {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-width: 50px;
+  min-height: 50px;
+  color: white;
+  background-color: green;
+  border-radius: 50px;
+  border: none;
+  text-decoration: none;
+  cursor: pointer;
+  font-size: 18px;
+  gap: 5px;
+}
+
+.control svg {
+  min-width: 32px;
+  min-height: 32px;
+}
+
+.button-padding {
+  padding: 0px 15px;
+}
+
+.padding-vertical {
+  padding-top: 50px ;
+  padding-bottom: 30px;
+}
